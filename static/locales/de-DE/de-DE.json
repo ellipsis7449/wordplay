@@ -3434,6 +3434,10 @@
                 "names": "$~j",
                 "doc": "$~Die Richtung und Größe der Richtung entlang der Y-Achse."
             }
+        },
+        "Speech": {
+            "doc": ["$?"],
+            "names": ["$?"]
         }
     },
     "output": {

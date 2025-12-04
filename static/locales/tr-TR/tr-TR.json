@@ -3431,6 +3431,10 @@
                 "names": "$~ve",
                 "doc": "$~Y ekseni boyunca yönün yönü ve büyüklüğü."
             }
+        },
+        "Speech": {
+            "doc": ["$?"],
+            "names": ["$?"]
         }
     },
     "output": {
