@@ -3437,7 +3437,19 @@
         },
         "Speech": {
             "doc": ["$?"],
-            "names": ["$?"]
+            "names": ["$?"],
+            "reset": {
+                "names": ["$?"],
+                "doc": "$?"
+            },
+            "language": {
+                "names": ["$?"],
+                "doc": "$?"
+            },
+            "limit": {
+                "names": ["$?"],
+                "doc": "$?"
+            }
         }
     },
     "output": {
