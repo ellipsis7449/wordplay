@@ -232,7 +232,7 @@ export default class Speech extends StreamValue<TextValue, string> {
             this.recognition = new SpeechRecognitionAPI();
             this.recognition.continuous = true; // Keep listening until stopped
             this.recognition.interimResults = false; // Only final results
-            this.recognition.maxAlternatives = 1; // Only best match
+            this.recognition.maxAlternatives = 1;    // Only best match
             this.recognition.lang = this.languageCode;
 
             // Handle results
