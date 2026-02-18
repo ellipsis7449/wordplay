@@ -4868,7 +4868,7 @@
                 "header": "Configuración",
                 "explanation": "Cambia la configuración de diseño, dispositivo y tema.",
                 "button": {
-                    "show": "mostrar cuadro de diálogo de configuración"
+                    "show": "mostrar configuración"
                 },
                 "mode": {
                     "layout": {
@@ -4879,7 +4879,7 @@
                             "$~pila",
                             "$~dos",
                             "$~uno",
-                            "$~gratis"
+                            "$~libre"
                         ],
                         "tips": [
                             "$~disponer mosaicos automáticamente",
@@ -4924,7 +4924,7 @@
                     },
                     "space": {
                         "label": "indicador de espacio",
-                        "labels": ["$~esconder", "$~espectáculo"],
+                        "labels": ["$~esconder", "$~enseñar"],
                         "tips": [
                             "$~No mostrar indicadores de espacio y tabulación",
                             "$~Mostrar indicadores de espacio y tabulación explícitamente"
@@ -4945,7 +4945,7 @@
                     },
                     "lines": {
                         "label": "$~Línea de números",
-                        "labels": ["$~esconder", "$~espectáculo"],
+                        "labels": ["$~esconder", "$~enseñar"],
                         "tips": [
                             "$~no mostrar números de línea en modo texto",
                             "$~mostrar números de línea en modo texto"
@@ -4963,7 +4963,7 @@
                 "options": {
                     "mic": "micrófono seleccionado",
                     "camera": "cámara seleccionada ",
-                    "face": "$~tipo de fuente",
+                    "face": "$~fuente de texto",
                     "default": "$~por defecto"
                 }
             },
@@ -4994,8 +4994,8 @@
                 }
             },
             "feedback": {
-                "header": "$~Comentario",
-                "explanation": "$~¡Ayúdanos a mejorar Wordplay informando 🪲 *problemas* y compartiendo 💡 *ideas*!",
+                "header": "$~Comentar",
+                "explanation": "$~¡Ayúdanos a mejorar Wordplay informándonos sobre 🪲 *problemas* y compartiendo 💡 *ideas*!",
                 "button": {
                     "show": "$~Mostrar el formulario de comentarios.",
                     "submit": {
@@ -5056,7 +5056,7 @@
                     "idea": "$~¿No viste la idea que tienes en mente? Sugiérela."
                 },
                 "error": {
-                    "login": "$~$!Debes estar <logged in@://login> para enviar comentarios",
+                    "login": "$~$!Debes <iniciar sesión@://login> para enviar comentarios",
                     "submit": "$~No es posible enviar comentarios.",
                     "load": "$~No se pueden cargar los comentarios",
                     "empty": "$~No hay comentarios para mostrar.",
@@ -5066,7 +5066,7 @@
             "notifications": {
                 "header": "$~Notificaciones",
                 "explanation": "$~Notificaciones de nuevos chats y tutoriales publicados",
-                "open": "$~abrir el cuadro de diálogo de notificaciones",
+                "open": "$~mostrar notificaciones",
                 "howToNotifications": {
                     "label": "$~notificaciones de nuevos procedimientos",
                     "labels": ["$~apagado", "$~en"],
@@ -5170,12 +5170,12 @@
                 "chooseLocales": "$~o elige",
                 "description": [
                     "Wordplay es un lenguaje de programación que te permite:",
-                    "• Anima palabras y emojis de forma divertida 🤪︎",
-                    "• Utilice el tiempo 🕦︎, el sonido 🎤︎, los sitios web 🔗︎ y la física 🌎︎",
-                    "• Comparte 🤝︎ con amigos, grupos o cualquier persona",
-                    "• Código en cualquier idioma del mundo 🌐︎",
-                    "• Edite con mouse 🖱︎️, toque 👆︎ y teclados ⌨︎️",
-                    "• Depurar hacia adelante ⏩︎ y hacia atrás ⏪︎",
+                    "• Animar palabras y emojis de forma divertida 🤪︎",
+                    "• Utilizar el tiempo 🕦︎, el sonido 🎤︎, sitios web 🔗︎ y la física 🌎︎",
+                    "• Compartir 🤝︎ con amigos, grupos o cualquier persona",
+                    "• Escribir código en cualquier idioma del mundo 🌐︎",
+                    "• Editar con el mouse 🖱︎️, el toque 👆︎ y el teclado ⌨︎️",
+                    "• Cazar errores hacia adelante ⏩︎ y hacia atrás ⏪︎",
                     "• Ver con pantallas 🖥︎️ y lectores de pantalla 🔊",
                     "Gratis para siempre de la <Universidad de Washington@https://ischool.uw.edu/>."
                 ],
@@ -5184,22 +5184,22 @@
                 ],
                 "link": {
                     "about": "¿Por qué existe este lugar?",
-                    "learn": "Un tutorial dramático de elenco de personajes ",
-                    "guide": "$~Buscar y explorar la referencia del idioma.",
+                    "learn": "Un tutorial dramático, con personajes aun mas dramáticos.",
+                    "guide": "$~Busca y explora por la referencia del idioma",
                     "projects": "Crea y comparte actuaciones",
-                    "galleries": "Experimenta actuaciones de otros",
+                    "galleries": "Experimenta las actuaciones de otros",
                     "rights": "Responsabilidades, las nuestras y las tuyas",
                     "community": {
                         "label": "Comunidad",
-                        "subtitle": "Chatea con nosotros en Discord."
+                        "subtitle": "Chatea con nosotros en Discord!"
                     },
                     "contribute": {
                         "label": "Contribuir",
-                        "subtitle": "Ayúdanos a crear Wordplay."
+                        "subtitle": "Ayúdanos a crear Wordplay"
                     },
-                    "teach": "$~Gestionar clases de estudiantes y sus proyectos",
+                    "teach": "$~Administra clases de estudiantes y sus proyectos",
                     "characters": "$~Crea emojis y símbolos personalizados",
-                    "updates": "$~Vea las novedades en Wordplay"
+                    "updates": "$~Ve las novedades de Wordplay"
                 }
             },
             "learn": {
@@ -5288,7 +5288,7 @@
                 }
             },
             "about": {
-                "header": "Acerca de",
+                "header": "Acerca de...",
                 "content": [
                     "¿Alguna vez has sentido que la programación era sólo para occidentales sin discapacidades que hablan inglés y que esten obsesionados con las computadoras?",
                     "Sí, nosotros también.",
@@ -5429,7 +5429,7 @@
             },
             "donate": {
                 "header": "Donar",
-                "prompt": "Habilita una programación más accesible y global",
+                "prompt": "Ayúdanos donando para el desarrollo de Wordplay",
                 "content": [
                     "Wordplay es un proyecto gratuito basado en la comunidad y respaldado por la <University of Washington@https://washington.edu>. Dependemos de donaciones de personas que creen en nuestra misión de lenguajes de programación educativos que son accesibles, y inclusivos del lenguaje.",
                     "Estos son nuestros costos actuales:",
