@@ -6,24 +6,36 @@
     import MarkupHTMLView from '@components/concepts/MarkupHTMLView.svelte';
     import { getUser } from '@components/project/Contexts';
     import CreatorList from '@components/project/CreatorList.svelte';
-    import { TileKind } from '@components/project/Tile';
     import Button from '@components/widgets/Button.svelte';
     import ConfirmButton from '@components/widgets/ConfirmButton.svelte';
     import Dialog from '@components/widgets/Dialog.svelte';
     import FormattedEditor from '@components/widgets/FormattedEditor.svelte';
     import Labeled from '@components/widgets/Labeled.svelte';
     import Mode from '@components/widgets/Mode.svelte';
+    import Options, { type Option } from '@components/widgets/Options.svelte';
     import TextField from '@components/widgets/TextField.svelte';
     import Toggle from '@components/widgets/Toggle.svelte';
     import type Chat from '@db/chats/ChatDatabase.svelte';
     import type { Creator } from '@db/creators/CreatorDatabase';
-    import { Chats, Creators, Galleries, HowTos, locales } from '@db/Database';
+    import {
+        Chats,
+        Creators,
+        Galleries,
+        HowTos,
+        Locales,
+        locales,
+    } from '@db/Database';
     import type Gallery from '@db/galleries/Gallery';
     import HowTo from '@db/howtos/HowToDatabase.svelte';
+    import type Locale from '@locale/Locale';
+    import { localeToString, stringToLocale } from '@locale/Locale';
+    import {
+        getLanguageLocalDescription,
+        type LocaleText,
+    } from '@locale/LocaleText';
     import type { ButtonText } from '@locale/UITexts';
-    import { COLLABORATE_SYMBOL } from '@parser/Symbols';
-    import type { Snippet } from 'svelte';
-    import type { SvelteMap } from 'svelte/reactivity';
+    import { onMount, type Snippet } from 'svelte';
+    import { SvelteMap, SvelteSet } from 'svelte/reactivity';
     import { movePermitted } from './HowToMovement';
     import HowToPrompt from './HowToPrompt.svelte';
     import HowToUsedBy from './HowToUsedBy.svelte';
@@ -36,6 +48,7 @@
         cameraX: number;
         cameraY: number;
         preview?: Snippet;
+        whichDialogOpen: string | undefined;
     }
 
     let {
@@ -45,6 +58,7 @@
         cameraX = $bindable(),
         cameraY = $bindable(),
         preview = undefined,
+        whichDialogOpen = $bindable(),
     }: Props = $props();
 
     // utility variables
@@ -56,30 +70,33 @@
     // Load the gallery if it exists.
     let gallery = $state<Gallery | undefined>(undefined);
     let galleryQuestions: string[] = $state([]);
-    $effect(() => {
+    onMount(async () => {
         if (galleryID) {
-            Galleries.get(galleryID).then((g) => {
-                gallery = g;
+            gallery = await Galleries.get(galleryID);
 
-                if (gallery) {
-                    galleryQuestions = gallery.getHowToGuidingQuestions();
-                }
-            });
-        } else gallery = undefined;
+            if (gallery) {
+                galleryQuestions = gallery.getHowToGuidingQuestions();
+            }
+        } else {
+            gallery = undefined;
+        }
     });
 
     const user = getUser();
 
     // whether to show the preview form or not.
     let show: boolean = $state(false);
+    $effect(() => {
+        if (show) whichDialogOpen = howToId;
+        else if (!show && whichDialogOpen === howToId)
+            whichDialogOpen = undefined;
+    });
 
     // data from the how-to
     let isPublished: boolean = $derived(howTo ? howTo.isPublished() : false);
     let notify: boolean = $derived(howTo ? howTo.getNotifySubscribers() : true);
 
     // prompts and editing
-    let title: string = $derived(howTo ? howTo.getTitle() : '');
-
     let allCollaborators: string[] = $state([]);
 
     $effect(() => {
@@ -96,10 +113,91 @@
     let prompts: string[] = $derived(
         howTo ? howTo.getGuidingQuestions() : galleryQuestions,
     );
-    let text: string[] = $state([]);
+
+    // locales
+    // defined as the first of the user's locales that is in the how-to's locales, if it exists
+    // then the first of the how-to's locales if it doesn't
+    let localeName: string = $state('');
     $effect(() => {
-        if (prompts.length > 0)
-            text = howTo ? howTo.getText() : Array(prompts.length).fill('');
+        if (howTo) {
+            // loop through the user's preferred locales. let the localeName by the first of the preferred locales that the how-to has
+            for (let locale of $locales.getPreferredLocales()) {
+                if (howTo.getLocales().includes(localeToString(locale))) {
+                    localeName = localeToString(locale);
+                    return;
+                }
+            }
+            localeName = howTo.getLocales()[0];
+        } else {
+            // if the how-to doesn't exist, just set the current locale name to be the most preferred locale
+            localeName = $locales.getLocaleString();
+        }
+    });
+
+    let localeList: SvelteSet<string> = $derived(
+        new SvelteSet<string>([
+            ...$locales.getLocales().map((l) => localeToString(l)),
+            ...(howTo ? howTo.getLocales() : []),
+        ]),
+    );
+    let localeOptions: Option[] = $derived.by(() => {
+        let localeOptions: Option[] = [];
+
+        [...localeList].forEach((loc) => {
+            let localeObj: Locale | undefined = stringToLocale(loc);
+
+            if (localeObj) {
+                localeOptions.push({
+                    label: getLanguageLocalDescription(localeObj),
+                    value: loc,
+                });
+            }
+        });
+
+        return localeOptions;
+    });
+
+    // map of locale name to title in that locale
+    // value is a string[] just to be able to use functions for how-to text without modification
+    let titles: SvelteMap<string, string[]> = $state(
+        new SvelteMap<string, string[]>(),
+    );
+    let titleInLocale: string = $derived(
+        howTo ? howTo.getTitleInLocale($locales.getLocaleString()) : '',
+    );
+
+    // a map of locale name to an array of strings that correspond to each locale
+    // the list of text corresponds to each prompt
+    let multilingualText: SvelteMap<string, string[]> = $state(
+        new SvelteMap<string, string[]>(),
+    );
+    onMount(() => {
+        titles = howTo
+            ? howTo.getTitleAsMap()
+            : new SvelteMap<string, string[]>(
+                  [...localeList].map((loc) => [loc, ['']]),
+              );
+
+        if (prompts.length > 0) {
+            multilingualText = howTo
+                ? howTo.getTextAsMap()
+                : new SvelteMap<string, string[]>(
+                      [...localeList].map((loc) => [
+                          loc,
+                          Array(prompts.length).fill(''),
+                      ]),
+                  );
+        }
+    });
+    $effect(() => {
+        if (!howTo && prompts.length > 0) {
+            multilingualText = new SvelteMap<string, string[]>(
+                [...localeList].map((loc) => [
+                    loc,
+                    Array(prompts.length).fill(''),
+                ]),
+            );
+        }
     });
 
     // social interactions
@@ -198,12 +296,43 @@
         return [proposedX, proposedY];
     }
 
+    /** Add placeholder titles for any locales that have text but no title */
+    async function generateTitleStringWithPlaceholders(
+        textLocales: string[],
+        titleMap: SvelteMap<string, string[]>,
+    ) {
+        await textLocales.forEach(async (loc) => {
+            let titleForLocale: string[] | undefined = titleMap.get(loc);
+
+            if (
+                titleForLocale === undefined ||
+                titleForLocale[0].length === 0
+            ) {
+                let locale: LocaleText | undefined = await Locales.loadLocale(
+                    loc,
+                    false,
+                );
+                if (!locale) return;
+
+                titleMap.set(loc, [
+                    locale.ui.howto.editor.untitledHowToPlaceholder,
+                ]);
+            }
+        });
+
+        return HowTo.mapToMarkupHelper(titleMap, 1);
+    }
+
     // writer functions
     async function writeNewHowTo(publish: boolean) {
         if (!gallery) return;
 
-        if (title.length === 0)
-            title = $locales.get((l) => l.ui.howto.editor.titlePlaceholder);
+        let [usedLocales, texts]: [string[], string[]] =
+            HowTo.mapToMarkupHelper(multilingualText, prompts.length);
+        let [_, titleStrings]: [string[], string[]] =
+            await generateTitleStringWithPlaceholders(usedLocales, titles);
+
+        let title: string = titleStrings[0];
 
         let writeX: number = 0;
         let writeY: number = 0;
@@ -221,10 +350,11 @@
                 allCollaborators,
                 title,
                 prompts,
-                text,
-                ['en-US'],
+                texts,
+                usedLocales,
                 gallery ? gallery.getHowToReactions() : {},
                 notify,
+                overwriteAccess,
             );
 
             // pan the camera to the new how-to
@@ -235,7 +365,17 @@
             // reset form
             howTo = undefined;
             title = '';
-            text = Array(prompts.length).fill('');
+            multilingualText = new SvelteMap<string, string[]>(
+                $locales
+                    .getLocales()
+                    .map((loc) => [
+                        localeToString(loc),
+                        Array(prompts.length).fill(''),
+                    ]),
+            );
+            titles = new SvelteMap<string, string[]>(
+                $locales.getLocales().map((loc) => [localeToString(loc), ['']]),
+            );
             allCollaborators = [];
         } else {
             // if was not published, and now is published, need to find coordinates for the how-to
@@ -250,10 +390,12 @@
                 ...howTo.getData(),
                 published: publish,
                 title: title,
-                text: text,
+                text: texts,
                 xcoord: writeX,
                 ycoord: writeY,
                 collaborators: allCollaborators,
+                scopeOverwrite: overwriteAccess,
+                locales: usedLocales,
                 social: {
                     ...howTo.getSocial(),
                     notifySubscribers: notify,
@@ -426,6 +568,12 @@
             });
         }
     }
+
+    // allowing the user to overwrite the gallery's expanded viewing permissions
+    let accessToggle: boolean = $state(false);
+    let overwriteAccess: boolean = $derived(
+        howTo ? howTo.getScopeOverwrite() : false,
+    );
 </script>
 
 <!-- button to click to open the how-to dialog. if there is a preview (i.e., it is published), use the preview as the button. 
@@ -448,7 +596,7 @@
                 ? l.ui.howto.drafts.tooltip
                 : l.ui.howto.editor.newForm.header}
         action={showPreview}
-        icon={howTo ? howTo.getTitle() : '+'}
+        icon={howTo ? titleInLocale : '+'}
         large={!howTo}
     ></Button>
 {/if}
@@ -470,33 +618,81 @@
         : undefined}
 >
     {#if editingMode}
+        <Options
+            value={localeName}
+            options={localeOptions}
+            label={(l) => l.ui.howto.editor.localeOptionsLabel}
+            change={(value) => {
+                if (value) {
+                    localeName = value;
+
+                    if (!multilingualText.has(localeName)) {
+                        multilingualText.set(
+                            localeName,
+                            Array(prompts.length).fill(''),
+                        );
+                    }
+
+                    if (!titles.has(localeName)) {
+                        titles.set(localeName, ['']);
+                    }
+                }
+            }}
+        />
         <Subheader>
             <TextField
-                bind:text={title}
+                bind:text={
+                    () => {
+                        let current: string[] | undefined =
+                            titles.get(localeName);
+                        return current ? current[0] : '';
+                    },
+                    (v) => {
+                        if (v !== undefined) titles.set(localeName, [v]);
+                    }
+                }
                 description={(l) => l.ui.howto.editor.title.description}
                 placeholder={(l) => l.ui.howto.editor.title.placeholder}
                 id="howto-title"
             />
         </Subheader>
-
-        {#each text as _, i (i)}
-            <HowToPrompt text={(l) => prompts[i]} />
+        {#each prompts as prompt, i (i)}
+            <HowToPrompt text={(l) => prompt} />
             <FormattedEditor
                 placeholder={(l) => l.ui.howto.editor.editor.placeholder}
                 description={(l) => l.ui.howto.editor.editor.description}
-                bind:text={text[i]}
+                bind:text={
+                    () => {
+                        let current: string[] | undefined =
+                            multilingualText.get(localeName);
+                        return current !== undefined ? current[i] : '';
+                    },
+                    (v) => {
+                        let current = multilingualText.get(localeName);
+
+                        if (current === undefined) return;
+
+                        if (current.length === 0) {
+                            current.push(v);
+                        } else {
+                            current[i] = v;
+                        }
+
+                        multilingualText.set(localeName, current);
+                    }
+                }
                 id="howto-prompt-{i}"
             />
         {/each}
-
         <div class="optionsarea">
             {#if collabToggle}
                 <div class="optionspanel">
-                    <Subheader>
-                        {COLLABORATE_SYMBOL}{TileKind.Collaborate}
-                    </Subheader>
+                    <Subheader
+                        text={(l) => l.ui.howto.editor.collaborators.header}
+                    />
                     <MarkupHTMLView
-                        markup={(l) => l.ui.howto.editor.collaboratorsPrompt}
+                        markup={(l) =>
+                            l.ui.howto.editor.collaborators.explanation}
                     ></MarkupHTMLView>
 
                     <Labeled label={(l) => l.ui.collaborate.role.collaborators}>
@@ -515,6 +711,19 @@
                     </Labeled>
                 </div>
             {/if}
+            {#if accessToggle}
+                <div class="optionspanel">
+                    <Subheader text={(l) => l.ui.howto.editor.access.header} />
+                    <MarkupHTMLView
+                        markup={(l) => l.ui.howto.editor.access.explanation}
+                    />
+                    <Mode
+                        modes={(l) => l.ui.howto.editor.accessMode}
+                        choice={overwriteAccess ? 0 : 1}
+                        select={(num) => (overwriteAccess = num === 0)}
+                    />
+                </div>
+            {/if}
         </div>
 
         <div class="toolbar">
@@ -526,8 +735,20 @@
                         collabToggle = !collabToggle;
                     }}
                 >
-                    {COLLABORATE_SYMBOL}
-                    {TileKind.Collaborate}
+                    <MarkupHTMLView
+                        markup={(l) => l.ui.howto.editor.collaborators.header}
+                    />
+                </Toggle>
+                <Toggle
+                    tips={(l) => l.ui.howto.editor.accessToggle}
+                    on={accessToggle}
+                    toggle={() => {
+                        accessToggle = !accessToggle;
+                    }}
+                >
+                    <MarkupHTMLView
+                        markup={(l) => l.ui.howto.editor.access.header}
+                    />
                 </Toggle>
             </div>
             <div class="toolbar-right">
@@ -560,9 +781,7 @@
             </div>
         </div>
     {:else if howTo && howTo.isPublished() && $user && isCreatorCollaboratorViewer($user.uid)}
-        <Header>
-            {title}
-        </Header>
+        <Header><MarkupHTMLView markup={titleInLocale} /></Header>
         <div class="creatorlist">
             <Labeled label={(l) => l.ui.howto.viewer.collaborators}>
                 <CreatorList
@@ -639,9 +858,9 @@
         </div>
         <div class="howtosplitview">
             <div class="splitside" id="howtoview">
-                {#each text as _, i (i)}
+                {#each howTo.getText() as markup, i (i)}
                     <HowToPrompt text={(l) => prompts[i]} />
-                    <MarkupHTMLView markup={text[i]} />
+                    <MarkupHTMLView {markup} />
                 {/each}
             </div>
             <div class="splitside" id="howtointeractions">
@@ -670,15 +889,13 @@
                 <ChatView
                     {chat}
                     creators={chatParticipants}
-                    {gallery}
+                    {galleryID}
                     {howTo}
                 />
             </div>
         </div>
-    {:else if !$user || !isCreatorCollaboratorViewer($user.uid)}
-        <Header>
-            {title}
-        </Header>
+    {:else if howTo && (!$user || !isCreatorCollaboratorViewer($user.uid))}
+        <Header><MarkupHTMLView markup={titleInLocale} /></Header>
         <div class="creatorlist">
             <Labeled label={(l) => l.ui.howto.viewer.collaborators}>
                 <CreatorList
@@ -690,14 +907,14 @@
         </div>
         <hr />
 
-        {#each text as _, i (i)}
+        {#each howTo.getText() as markup, i (i)}
             <HowToPrompt text={(l) => prompts[i]} />
-            <MarkupHTMLView markup={text[i]} />
+            <MarkupHTMLView {markup} />
         {/each}
-    {:else}
-        <HowToPrompt>
-            {title}
-        </HowToPrompt>
+    {:else if howTo}
+        <Header>
+            <MarkupHTMLView markup={titleInLocale} />
+        </Header>
         <div class="creatorlist">
             <Labeled label={(l) => l.ui.howto.viewer.collaborators}>
                 <CreatorList
@@ -732,9 +949,9 @@
             />
         </div>
 
-        {#each text as _, i (i)}
+        {#each howTo.getText() as markup, i (i)}
             <HowToPrompt text={(l) => prompts[i]} />
-            <MarkupHTMLView markup={text[i]} />
+            <MarkupHTMLView {markup} />
         {/each}
     {/if}
 </Dialog>

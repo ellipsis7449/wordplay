@@ -4429,7 +4429,10 @@
                 },
                 "curators": {
                     "header": "Curators",
-                    "explanation": "Creators can edit the projects and gallery settings, and chat on all projects."
+                    "explanation": [
+                        "Curators can edit the projects and gallery settings, and chat on all projects.",
+                        "/Curators are responsible for moderating the content of the chats associated with projects and how-tos in the gallery. Chats reported by creators can be found on the <gallery moderation dashboard@://galleries/moderation>./"
+                    ]
                 },
                 "creators": {
                     "header": "Creators",
@@ -4464,6 +4467,29 @@
                 }
             }
         },
+        "gallerymoderation": {
+            "header": "Gallery Moderation Dashboard",
+            "description": "The following messages in galleries that you curate have been reported by users for moderation.",
+            "labels": {
+                "message": "message",
+                "reporter": "reporter",
+                "action": "moderator actions"
+            },
+            "view": {
+                "label": "view chat",
+                "tip": "view message in chat"
+            },
+            "remove": {
+                "label": "remove",
+                "tip": "this message violates guidelines"
+            },
+            "keep": {
+                "label": "keep",
+                "tip": "this message does not violate guidelines"
+            },
+            "empty": "No messages require moderation",
+            "error": "You must be logged in to moderate galleries"
+        },
         "howto": {
             "galleryView": {
                 "header": "How-tos",
@@ -4490,7 +4516,7 @@
                     "tip": "remove this how-to from your bookmarks"
                 },
                 "empty": "You can bookmark how-tos you want to reference later.",
-                "notLoggedIn": "$!You must be <logged in@://login> to use bookmarks"
+                "notLoggedIn": "You must be <logged in@://login> to use bookmarks"
             },
             "navigationtooltip": "navigate to a how-to",
             "button": {
@@ -4532,12 +4558,32 @@
                     "description": "the title of your how-to",
                     "placeholder": "Title"
                 },
-                "titlePlaceholder": "Untitled how-to",
-                "collaboratorsPrompt": "Add a collaborator, who can edit this how-to",
+                "untitledHowToPlaceholder": "Untitled how-to",
+                "collaborators": {
+                    "header": "👥 collaborators",
+                    "explanation": "Collaborators can edit this how-to and view it in drafts."
+                },
                 "collaboratorsToggle": {
                     "on": "collapse the collaborators panel",
                     "off": "expand the collaborators panel"
-                }
+                },
+                "access": {
+                    "header": "↗ share",
+                    "explanation": "The curator of this gallery can let creators and curators of other galleries they curate view this how-to. If you don't want them to be able to view it, you can restrict who can view this how-to to only the curators and creators in this gallery."
+                },
+                "accessToggle": {
+                    "on": "collapse the access settings panel",
+                    "off": "expand the access settings panel"
+                },
+                "accessMode": {
+                    "label": "restrict who can view this how-to",
+                    "labels": ["restricted", "expanded"],
+                    "tips": [
+                        "only creators in this gallery can view",
+                        "creators and curators in any gallery the curator curates can view"
+                    ]
+                },
+                "localeOptionsLabel": "editor input language"
             },
             "viewer": {
                 "view": {
@@ -4847,6 +4893,10 @@
                 "search": "keywords"
             },
             "header": {
+                "names": {
+                    "header": "Names",
+                    "explanation": "/Names for this concept./"
+                },
                 "inputs": {
                     "header": "Inputs",
                     "explanation": "/Required and optional values./"
@@ -5066,7 +5116,7 @@
                 },
                 "error": {
                     "unknown": "We don't know a creator with this email.",
-                    "anonymous": "$!You must be <logged in@://login> to share.",
+                    "anonymous": "You must be <logged in@://login> to share.",
                     "self": "You can't add yourself."
                 },
                 "button": {
@@ -5200,6 +5250,7 @@
                     "howToHeader": "New how-to titled \"$1\" was posted",
                     "projectChatHeader": "New message in project \"$1\"",
                     "howToChatHeader": "New message in how-to \"$1\"",
+                    "moderationHeader": "Message in \"$1\" requires moderation action",
                     "link": "details"
                 },
                 "delete": "delete this notification",
@@ -5294,7 +5345,7 @@
                     "idea": "Didn't see the idea you're thinking of? Suggest it."
                 },
                 "error": {
-                    "login": "$!You must be <logged in@://login> to submit feedback",
+                    "login": "You must be <logged in@://login> to submit feedback",
                     "submit": "Unable to submit feedback.",
                     "load": "Unable to load feedback",
                     "empty": "There is no feedback to show.",
@@ -5328,6 +5379,21 @@
                 },
                 "delete": "delete this message"
             },
+            "moderation": {
+                "header": "Report this message",
+                "explanation": "If this message does not meet our <community standards@://rights> or the type of feedback your requested, you can report it. When you report this message, it will be sent to the gallery curators and taken down until it can be reviewed.",
+                "report": {
+                    "tip": "report this message",
+                    "label": "report"
+                },
+                "moderate": {
+                    "tip": "go to moderation dashboard",
+                    "label": "moderate"
+                },
+                "pending": "This message is temporarily removed while waiting for moderation action.",
+                "removed": "This message has been removed for violating community or feedback guidelines.",
+                "inGallery": "This chat is in a gallery. It is subject to moderation by the gallery curators. You can report messages that violate our <community standards@://rights> for moderation."
+            },
             "error": {
                 "unowned": "This project isn't stored online, so it can't have a chat or collaborators.",
                 "offline": "Unable to load this chat.",
@@ -5345,10 +5411,7 @@
                 "explanation": "Your project is in a gallery. By default, anyone who can see this gallery can see this project. You can restrict who can see your project to only you and the gallery curators.",
                 "mode": {
                     "label": "restrict project access",
-                    "labels": [
-                        "do not restrict",
-                        "restrict"
-                    ],
+                    "labels": ["do not restrict", "restrict"],
                     "tips": [
                         "anyone who can see this gallery can see your project",
                         "only the gallery curators can see your project"
@@ -5457,13 +5520,14 @@
                     "characters": "Create custom emojis and symbols",
                     "rights": "Responsibilities, ours and yours",
                     "about": "Why does this place exist?",
+                    "updates": "See what's new in Wordplay",
                     "community": {
                         "label": "Community",
-                        "subtitle": "Chat with us on Discord."
+                        "subtitle": "Chat with us on Discord"
                     },
                     "contribute": {
                         "label": "Contribute",
-                        "subtitle": "Help us make Wordplay."
+                        "subtitle": "Help us make Wordplay"
                     }
                 }
             },
@@ -5486,7 +5550,7 @@
                 },
                 "error": {
                     "offline": "We weren't able to check your teacher status. Are you logged in?",
-                    "login": "$!You need to be <logged in@://login> to manage classes.",
+                    "login": "You need to be <logged in@://login> to manage classes.",
                     "teacher": "You need teacher privileges to create and manage classes. Fill out this form and let's get to know each other!"
                 },
                 "link": {
@@ -5601,8 +5665,6 @@
                 "header": "Projects",
                 "projectprompt": "Ready to say something? Create a project or work on one. If you get stuck, keep <learning@://learn>.",
                 "archiveprompt": "These are projects you've archived. Only owners can permanently delete or unarchive them. Archived projects will be permanently deleted 30 days after they were last edited.",
-                "galleriesheader": "Galleries",
-                "galleryprompt": "Create and curate galleries to share a collection of projects with others.",
                 "add": {
                     "header": "New Project",
                     "explanation": "Choose a template to create a new project."
@@ -5619,7 +5681,6 @@
                     "newproject": "new project",
                     "editproject": "edit this project",
                     "viewcode": "view this project's code",
-                    "newgallery": "new gallery",
                     "unarchive": "unarchive this project"
                 },
                 "confirm": {
@@ -5634,21 +5695,40 @@
                 },
                 "error": {
                     "noaccess": "We couldn't reach the internet.",
-                    "nogalleryedits": "$!You must be <logged in@://login> to create and change galleries.",
                     "newgallery": "We couldn't create a new gallery.",
-                    "nodeletes": "$!You must be <logged in@://login> to delete archived projects.",
+                    "nodeletes": "You must be <logged in@://login> to delete archived projects.",
                     "delete": "Oops, we couldn't delete the project!"
                 }
             },
             "galleries": {
                 "header": "Galleries",
-                "prompt": "These are performances that others have made. Experience them, study them, or adapt them into your own statement.",
-                "examples": "Examples",
+                "prompt": "Galleries are collections of projects, often centered around a theme, and curated by you or other creators.",
+                "section": {
+                    "own": {
+                        "header": "Yours",
+                        "explanation": [
+                            "Contribute to a gallery you're invited to, or curate your own gallery with a particular theme, and invite others.",
+                            "/Curators are responsible for moderating the content in galleries using the <gallery moderation dashboard@://galleries/moderation>./"
+                        ]
+                    },
+                    "examples": {
+                        "header": "Examples",
+                        "explanation": "These are curated galleries from the Wordplay developers. They are good starting points for learning and inspiration."
+                    },
+                    "public": {
+                        "header": "Public",
+                        "explanation": "These are galleries that Wordplay creators have made public. See what others have made for inspiration!"
+                    }
+                },
                 "button": {
+                    "newgallery": "new gallery",
                     "more": {
                         "label": "more...",
                         "tip": "load more galleries"
                     }
+                },
+                "error": {
+                    "nogalleryedits": "You must be <logged in@://login> to create and change galleries."
                 }
             },
             "characters": {
@@ -5667,7 +5747,7 @@
                 },
                 "error": {
                     "offline": "We couldn't access your characters stored online.",
-                    "noauth": "$!You must be <logged in@://login> to see your characters and create new ones.",
+                    "noauth": "You must be <logged in@://login> to see your characters and create new ones.",
                     "create": "Unable to create a new character."
                 }
             },
@@ -5861,7 +5941,7 @@
                     "end": "or press escape.",
                     "loadfail": "There was a problem loading this character.",
                     "notfound": "This character doesn't exist or isn't visible to you.",
-                    "unauthenticated": "$!You must be <logged in@://login> to edit a character.",
+                    "unauthenticated": "You must be <logged in@://login> to edit a character.",
                     "taken": "You already have a character with this name; not saving.",
                     "projecteditfail": "There was a problem updating projects that use this character. The following projects need fixing: ",
                     "untitledproject": "Untitled Project"
@@ -5883,6 +5963,22 @@
                     "We're a community of designers, educators, and developers trying to bring this vision to life. We are people of color, we are trans, we are queer, we are disabled, we are immigrants, we are refugees. We're centered at the <University of Washington@https://washington.edu> <Information School@https://ischool.uw.edu/> in Seattle, Washington, USA, a place that aspires to welcome everyone and undo the ableist and racist ravages of colonialism that continue today. Making this programming language and platform is a small part of that mission, offering a glimpse of a future of computing where /everyone/ belongs.",
                     "We'd love your help. Learn <how to contribute@https://github.com/wordplaydev/wordplay/wiki/contribute>, <donate@://donate>, or track our <progress@https://github.com/amyjko/wordplay/milestones>. Write our community organizer <Amy@https://amyjko.phd> if you have questions."
                 ]
+            },
+            "updates": {
+                "header": "Updates",
+                "content": [
+                    "These are the latest new features, improvements, and bug fixes in Wordplay. We release updates weekly on most Saturdays, unless we find an urgent bug."
+                ],
+                "tips": {
+                    "expand": "Expand this date's updates",
+                    "collapse": "Collapse this date's updates"
+                },
+                "categories": {
+                    "added": "Added",
+                    "changed": "Changed",
+                    "removed": "Removed",
+                    "fixed": "Fixed"
+                }
             },
             "login": {
                 "header": "Login",
@@ -5999,19 +6095,20 @@
                     "• You can fully delete any project or your own account at any time.",
                     "• You can get an export of any project or your whole account at any time.",
                     "Here's how we will and won't use your data:",
-                    "• We won't share your data with anyone, unless explicitly required by law. It's always possible that your data is taken without out permission (a 'data breach'). If we discover that this has happened, we will notify you that this has happened using the email you've shared with us.",
+                    "• We won't share your data with anyone, unless explicitly required by law. It's always possible that your data is taken without permission (a 'data breach'). If we discover that this has happened, we will notify you that this has happened using the email you've shared with us.",
                     "• We won't contact you via your email address unless you 1) make an account change that requires us to, 2) you explicitly give us consent to reach out, or 3) in the case of data breach above.",
-                    "• We may analyze projects on the platform to understand what everyone is making and how they are making it. We may share these aggregated, anonymized insights in academic publications. We will only do this under the supervision of an institutional review board, as mandated by U.S. federal law.",
+                    "• We may analyze projects, galleries, and how to content on the platform to understand what everyone is making and how they are making it. We may share these aggregated, anonymized insights in academic publications. We will only do this under the supervision of an institutional review board, as mandated by U.S. federal law.",
                     "Finally, a note about speech. You can say anything you want on this platform in *private*. Projects are private by default, and if you share them with specific email addresses, they are still considered private. We won't moderate anything in private projects.",
                     "But making a project *public*, or including it in a public gallery, is a privilege. This is a platform made for love, affirmation, respect, and dignity. Therefore, we expect that none of your *public* content will:"
                 ],
                 "consequences": [
+                    "Chats for projects and how-tos that are in public or private galleries are subject to moderation by the gallery curators. You can report messages that violate these community guidelines to the curators using the report button next to each message, and curators can approve or remove messages.",
                     "If we find a project or gallery that violates these rules, we will warn creators before they view it, or block it from being viewed. If you repeatedly violate these rules, you'll lose the privilege of posting publicly."
                 ]
             },
             "donate": {
                 "header": "Donate",
-                "prompt": "Help us pay for bandwidth and compensate student and teacher contributors.",
+                "prompt": "Help us fund Wordplay development",
                 "content": [
                     "Wordplay is a free, community-based project supported by the <University of Washington@https://washington.edu>. We rely on gifts from people who believe in our mission of accessible, language-inclusive, educational programming languages.",
                     "Here are our current costs:",

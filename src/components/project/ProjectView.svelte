@@ -588,8 +588,8 @@
             new Layout(
                 project.getID(),
                 defaultTiles,
-                // If showing output was requested, we fullscreen on output
-                showOutput ? TileKind.Output : undefined,
+                // If showing output or requested play was requested, we fullscreen on output
+                showOutput || requestedPlay ? TileKind.Output : undefined,
                 null,
             )
         );
@@ -1570,6 +1570,7 @@
 {/if}
 <!-- Render the current project. -->
 <main class="project" class:dragging={dragged !== undefined} bind:this={view}>
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
         class="canvas"
         class:free={$arrangement === Arrangement.Free}
