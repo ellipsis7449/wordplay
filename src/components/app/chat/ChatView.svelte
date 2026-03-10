@@ -139,12 +139,12 @@
                           timeStyle: 'short',
                       })}</div
             >
-            {#if $user?.uid === msg.creator && msg.text !== null && (msg.moderation === undefined || msg.moderation === 'approved')}
-                <Button
+            {#if $user?.uid === msg.creator && msg.text !== null}
+                <ConfirmButton
                     tip={(l) => l.ui.collaborate.button.delete}
                     action={() => deleteMessage(chat, msg)}
                     icon={CANCEL_SYMBOL}
-                ></Button>
+                ></ConfirmButton>
             {/if}
         </div>
         <div
