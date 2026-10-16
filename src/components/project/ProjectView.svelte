@@ -1,7 +1,5 @@
 <script module lang="ts">
     import getConceptName from '#locale/getConceptName.ts';
-    /** How long to wait until considering typing idle. */
-    export const KeyboardIdleWaitTime = 500;
 </script>
 
 <!-- svelte-ignore state_referenced_locally -->
@@ -106,10 +104,9 @@
     } from '#db/settings/Arrangement.ts';
     import { consent, refreshConsentFromBrowser } from '#input/permissions.ts';
     import type Locale from '#locale/Locale.ts';
-    import { localesAreEqual, stringToLocale } from '#locale/Locale.ts';
     import { withoutAnnotations } from '#locale/withoutAnnotations.ts';
     import Evaluate from '#nodes/Evaluate.ts';
-    import Node, { isFieldPosition } from '#nodes/Node.ts';
+    import Node from '#nodes/Node.ts';
     import {
         linesOfNode,
         referenceLabel,
@@ -186,6 +183,7 @@
         getFullscreen,
         getUser,
         IdleKind,
+        KeyboardIdleWaitTime,
         isAuthenticated,
         setAnimatingNodes,
         setSoundingNodes,
@@ -222,7 +220,10 @@
     import Link from '#components/app/Link.svelte';
     import EvaluationCues from '#components/project/EvaluationCues.svelte';
     import RemixButton from '#components/project/RemixButton.svelte';
-    import { PARAM_CONCEPT } from '#concepts/ConceptParams.ts';
+    import {
+        guideSegments,
+        parseGuidePath,
+    } from '#components/concepts/guidePath.ts';
     import { PROJECT_PARAM_FROM } from '../../routes/[[locale]]/project/constants';
     import ReportButton from '#components/project/ReportButton.svelte';
     import Layout from '#components/project/Layout.ts';
@@ -262,6 +263,7 @@
         AnimationIcon,
     } from '#db/settings/AnimationFactorSetting.ts';
     import type MenuInfo from '#edit/menu/Menu.ts';
+    import { anchorMenu } from '#components/editor/menu/menuAnchor.ts';
     import { must } from '#util/nullable.ts';
 
     interface Props {
@@ -616,25 +618,11 @@
     /** Keep track of locales used */
     const localesUsed = $derived(project.getLocalesUsed());
 
-    /** The default evaluation list: the project's DECLARED locales first (the
-     * creator's priority order — the languages dialog's "first is primary"),
-     * then any other language the code names. `getLocalesUsed` alone is
-     * tag-appearance-ordered, which put English first on the stage of a
-     * project written in Spanish whenever its preserved multilingual content
-     * tagged English first (#1310's localized examples all do). */
-    const defaultEvaluationLocales = $derived.by(() => {
-        const declared = project
-            .getLocaleCodes()
-            .map(stringToLocale)
-            .filter((locale): locale is Locale => locale !== undefined);
-        return [
-            ...declared,
-            ...localesUsed.filter(
-                (used) =>
-                    !declared.some((locale) => localesAreEqual(locale, used)),
-            ),
-        ];
-    });
+    /** The default evaluation list is the reader's chosen locales, without the en-US fallback,
+     *  so `🌎` and a text's chosen translation answer for the audience, the same as in PlayView.
+     *  A text with no option in those locales still shows its first, so a project written in one
+     *  language reads in it for everyone. */
+    const defaultEvaluationLocales = $derived($locales.getPreferredLocales());
 
     /** Keep a reactive map from source to EditorLocale chosen for the source */
     let editorLocales = $state<Record<string, Locale | null>>({});
@@ -1724,13 +1712,17 @@
     });
 
     /** What to call the place the link goes back to. The guide names the thing
-     *  being explained in its own URL, so "back to Phrase" says where you're
+     *  being explained in its own path, so "back to Phrase" says where you're
      *  going; anything else falls back to the guide itself. */
     const returnLabel = $derived.by(() => {
         if (returnTo === undefined) return undefined;
-        const concept = new URLSearchParams(
-            returnTo.slice(returnTo.indexOf('?')),
-        ).get(PARAM_CONCEPT);
+        // A guide location is a path ending in the concept's token.
+        const pathname = returnTo.split(/[?#]/, 1)[0] ?? '';
+        const parsed = pathname.includes('/guide')
+            ? parseGuidePath(guideSegments(pathname))
+            : undefined;
+        const concept =
+            parsed?.kind === 'concept' ? (parsed.tokens.at(-1) ?? null) : null;
         return $locales
             .concretize((l) => l.ui.project.link.backTo, {
                 place:
@@ -2687,7 +2679,6 @@
 
     function getMenuPosition(menu: MenuInfo) {
         const source = menu.getSource();
-        const anchor = menu.getAnchor();
 
         // Find the editor. Scoped to the focused view's tile first, because a
         // source can be shown in two views at once and both carry the same
@@ -2717,57 +2708,12 @@
             height: view.clientHeight,
         };
 
-        if (isFieldPosition(anchor)) {
-            // Is it a field position? Position near the field.
-            // The descendant combinator would also match triggers inside
-            // nested .node-view children (which can reuse the same field
-            // name, e.g. inner and outer Evaluate.inputs), so filter to the
-            // trigger whose closest .node-view ancestor is the actual parent.
-            const candidates = editor.querySelectorAll(
-                `.node-view[data-id="${anchor.parent.id}"] .trigger[data-field="${anchor.field}"]`,
-            );
-            const trigger = Array.from(candidates).find(
-                (t) =>
-                    t.closest('.node-view')?.getAttribute('data-id') ===
-                    String(anchor.parent.id),
-            );
-            if (trigger == null) return undefined;
-            const triggerBounds = trigger.getBoundingClientRect();
-            return {
-                left: triggerBounds.left - projectBounds.left,
-                top:
-                    triggerBounds.bottom -
-                    triggerBounds.height / 4 -
-                    projectBounds.top,
-                container,
-            };
-        } else {
-            // Is it a node? Position near it's top left.
-            if (anchor instanceof Node) {
-                const view = editor.querySelector(
-                    `.node-view[data-id="${anchor.id}"]`,
-                );
-                if (view == null) return undefined;
-                const nodeBounds = view.getBoundingClientRect();
-                return {
-                    left: nodeBounds.left - projectBounds.left,
-                    top: nodeBounds.bottom - projectBounds.top,
-                    container,
-                };
-            }
-            // Is it a position? Position at the bottom right of the caret.
-            else if (typeof anchor === 'number') {
-                // Find the position of the caret in the editor.
-                const caretView = editor.querySelector('.caret');
-                if (caretView === null) return undefined;
-                const caretBounds = caretView.getBoundingClientRect();
-                return {
-                    left: caretBounds.left - projectBounds.left,
-                    top: caretBounds.bottom - projectBounds.top,
-                    container,
-                };
-            }
-        }
+        return anchorMenu(
+            menu,
+            editor,
+            { left: projectBounds.left, top: projectBounds.top },
+            container,
+        );
     }
 
     function toggleTile(tile: Tile) {

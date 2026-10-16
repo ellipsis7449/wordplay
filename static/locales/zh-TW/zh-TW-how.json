@@ -68,6 +68,13 @@
         "related": ["custom-characters"]
     },
     {
+        "id": "stage-effects",
+        "title": "讓整個舞台看起來像老電影、電視或水中",
+        "category": "stories",
+        "body": "電影會改變整個場景的樣子：回憶畫面會變得柔和明亮，舊新聞影片會有刮痕又灰灰的，電視會出現雜訊，水底的東西則會泛起波紋、變成藍色。\n我們也可以這樣做，只要給一個 @Stage 一份 @Effect 的清單。\n\n這是透過水看到的場景。\n\n\\\n舞台(\n\t[短語('🐠') 短語('🌿' 位置: 位置(1m -1m))]\n\t效果: [波浪(0.15m) 染色(色彩(55% 45 220°) 70%) 霧氣(40% 色彩(70% 30 200°))]\n)\n\\\n\n 每個效果只做一件事。 @Wave 讓畫面泛起波紋， @Tint 把所有東西染成同一種顏色，而 @Haze 則在上面蓋一層飄動的霧。\n合在一起，它們就像水一樣。效果會依照清單中的順序套用，所以後面的效果會改變前面效果的結果。\n\n有十種效果可以組合： @Blur、 @Grade、 @Tint、 @Haze、 @Grain、 @Scanlines、 @Wave、 @Damage、 @Flicker，還有 @Vignette 的清單。\n這是一部老電影： @Grade 先去掉顏色，再用 @Damage、 @Grain，還有 @Flicker 讓畫面看起來破舊又不穩定。\n\n\\\n舞台(\n\t[短語('THE END')]\n\t效果: [調色(對比: 130% 飽和度: 0%) 損壞(70% 50%) 顆粒(25%) 閃動(15% 2) 暗角(60%)]\n)\n\\\n\n 這是一台訊號中斷的電視。\n\n\\\n舞台(\n\t[短語('channel 3')]\n\t效果: [掃描線(40% 速度: 1) 顆粒(50% 大小: 2) 閃動(20%)]\n)\n\\\n\n 如果想一再使用同一種外觀，可以做一個函式，讓它回傳效果的清單。\n函式的輸入就成了這個外觀自己的設定。這一個會越往深處越模糊。\n\n\\\nƒ underwater(depth•%) [\n\t波浪(0.2m · depth)\n\t染色(色彩(55% 45 220°) depth)\n\t模糊(0.03m · depth)\n]\n\n舞台([短語('🐠')] 效果: underwater(80%))\n\\\n\n 外觀也可以隨著遊戲的狀態改變。\n在這裡，當玩家只剩一條命時，舞台的邊緣會變模糊變暗；命比較多時，又會恢復清楚。\n\n\\\nlives: 3 … ∆ 鑰匙() … lives - 1\n\n舞台(\n\t[短語(lives → '')]\n\t效果: lives < 2 ? [模糊(0.05m) 暗角(70% 色彩(30% 80 30°))] []\n)\n\\\n\n 效果會蓋住舞台上的東西，但不會影響舞台的 @Stage.overlay，所以分數或按鈕還是清楚好讀。\n\n讓整個舞台搖晃，像地震一樣，根本不是效果： @Stage 可以像其他輸出一樣移動，所以幫它加上一個 @Sequence 的清單。\n\n\\\n舞台([短語('🏠')] 休息時: 排序.抖動(0.5s 計數: 4x))\n\\\n\n 有些效果動得很快。如果有人已經請裝置減少動態效果，所有效果都會保持不動。\n@Flicker 每秒最多只會閃爍幾次，不管你要求多快都一樣，因為快速閃爍可能會傷害人。",
+        "related": ["track-game-state"]
+    },
+    {
         "id": "shake-phrase",
         "title": "讓角色搖晃",
         "category": "randomization",
@@ -206,6 +213,13 @@
         "category": "styling",
         "body": "一個 @Phrase 根據觀眾選擇的語言，向他們顯示正確的翻譯。如果您的觀眾講西班牙語，您可以用西班牙語與他們溝通；如果他們既講西班牙語又講英語（西班牙語和英語混雜！），您可以混合使用這兩種語言。\n\n給予 @TextLiteral 提供多種譯本，包括多語言譯本， @wordplay 會為每位觀眾挑選最合適的譯本：\n\n\\\nPhrase(\"hola\"/es\"你好\"/en\"你好，先生\"/es_en)\n\\\n\n 一位首選語言僅為西班牙語的觀眾會看到 / 你好 / 只喜歡英語的觀眾會看到 / 你好 / 一位既喜歡西班牙語又喜歡英語的觀眾會看到 / 你好，先生 / — 西班牙文和英文混合版本。\n\n文字遊戲傾向於最精確的匹配，因此，當兩種翻譯都適用時，單語翻譯總是勝過多語翻譯。\n\nSpanglish（西班牙式英語）版本會全部用西班牙語（它的第一語言）朗讀出來。如果想讓每個詞用自己的語言朗讀，請把各段分別標記語言，再把它們接起來：\n\n\\\nPhrase(\"hola \"/es + \"gentleman\"/en)\n\\",
         "related": ["styling-text"]
+    },
+    {
+        "id": "party-text",
+        "title": "讓每個字母有自己的顏色",
+        "category": "styling",
+        "body": "一個 @Phrase 可以讓它的每個字形有不同的 @Pose ，使用 @Phrase/poses。\n第一個字形用第一個姿勢，第二個字形用第二個姿勢。姿勢用完了，就會從第一個重新開始。\n\n這是一段派對文字，三種顏色輪流出現：\n\n\\\nPhrase(\n\t'party time!'\n\t表面: 'Luckiest Guy'\n\t姿勢: [\n\t\tPose(色彩: Color(25% 70 250°))\n\t\tPose(色彩: Color(50% 80 300°))\n\t\tPose(色彩: Color(58% 90 60°))\n\t]\n)\n\\\n\n 空格也算字形，所以顏色會跨過單字繼續輪流。\n這些顏色不只色相不同，明暗也不同，所以看顏色的方式不一樣的人也能分辨它們。\n\n姿勢不只能改變顏色。每個字形都能繞著自己的中心傾斜、變大、淡出和移動，所以我們可以讓字母彈跳起來：\n\n\\\nPhrase(\n\t'bounce'\n\t表面: 'Luckiest Guy'\n\t姿勢: [\n\t\tPose(色彩: Color(25% 70 250°) 旋轉: -10° 偏移: Place(0m 0.1m))\n\t\tPose(色彩: Color(58% 90 60°) 旋轉: 10° 不透明: 0.6)\n\t]\n)\n\\\n\n 姿勢也能用在有格式的文字上，而且和其他輸入一樣，可以隨著其他價值改變。\n這張勒索信每四分之一秒就換一個新的傾斜角度：\n\n\\\ntilt: 0° … ∆ Time(250ms) … Random(-15° 15°)\nPhrase(\n\t`*ransom* /note/`\n\t表面: 'Courier Prime'\n\t姿勢: [\n\t\tPose(旋轉: tilt 偏移: Place(0m 0.05m))\n\t\tPose(旋轉: -tilt 縮放: 1.2)\n\t\tPose(旋轉: tilt ÷ 2 偏移: Place(0m -0.05m))\n\t]\n)\n\\",
+        "related": ["styling-text", "your-own-template", "animate-phrase"]
     },
     {
         "id": "find-text-with-patterns",

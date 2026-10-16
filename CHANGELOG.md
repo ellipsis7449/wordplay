@@ -4,6 +4,52 @@ We'll note all notable changes in this file, including bug fixes, enhancements, 
 Dates are in `YYYY-MM-DD` format and versions are in [semantic versioning](http://semver.org/) format.
 These notes are publicly posted in [production](https://wordplay.dev/updates), so we write them to an audience of teachers and youth.
 
+## 0.39.0 - 2026-10-10
+
+### Added
+
+- 🎉 `Phrase` has a new `poses` input that gives each letter its own color, tilt, size, or position, taking turns through a list of `Pose`.
+- 🎞️ `Stage` has a new `effects` input that lays film looks over everything on it, like `Blur`, `Grain`, `Wave`, `Damage`, and `Flicker`, with a new how-to in the [Guide](https://wordplay.dev/guide).
+- ✍️ You can now change the code examples on the [home page](https://wordplay.dev/) and in the Guide and watch them run right away, and ↺ puts back the original.
+- 🌐 We added support for Roman Urdu (`ur-Latn-PK`), which is Urdu written with Latin letters! (#1457)
+
+### Changed
+
+- 🧭 Every page of the [Guide](https://wordplay.dev/guide) has its own address, and its tabs and breadcrumbs now show where the page you're reading belongs.
+- 🎨 We made code easier to read: `?`, `??`, and `???` now share a color, a type that takes anything shows as `◌`, and a range type shows as `‥` instead of an orange label.
+- 🎨 Placeholders in code in the [Guide](https://wordplay.dev/guide) now show their type small and grey, and only when nothing else says what belongs there.
+
+### Fixed
+
+- 🧭 The browser's Forward button now works in the [Guide](https://wordplay.dev/guide), and opening a link to one of its pages no longer shows a different page first.
+- 📖 Code examples in the [Guide](https://wordplay.dev/guide) no longer start with an empty line.
+- 🎞️ A `Stage` with its own `resting` animation no longer jumps away from where the camera shows it while the animation plays.
+- 🧭 Going back from a page in the [Guide](https://wordplay.dev/guide) returns to the list you opened it from.
+
+## 0.38.6 - 2026-10-10
+
+### Fixed
+
+- 🖐️ `Hand()` and `Face()` now go back to their starting values when your hand or face leaves the camera, instead of staying how they last were.
+- 🌐 We fixed words that ran together in the translated versions of the gallery examples.
+
+## 0.38.5 - 2026-10-10
+
+### Changed
+
+- 🌐 `🌎` now checks the languages the reader chose, the same way in the editor and in galleries, so `🌎/en` is only true for readers who chose English.
+- 🔁 A list's `replace` now wraps an index past the end back to the start, the same way reading from a list does.
+- 📏 Converting a number with a unit to a list keeps the unit, so `3m → []` is `[1m 2m 3m]`.
+
+### Fixed
+
+- ⏱️ `◆` now becomes false after a program's first evaluation, instead of staying true forever.
+- ⏪ `←←` now gives every earlier value of a stream when it has fewer than you asked for, instead of only the newest.
+- 🐛 Converting a range, a function, a pattern, or a value that might be `ø` to text with `→ ''` now works instead of stopping the program.
+- 🖱️ Reading `Pointer().rotation` no longer stops the program.
+- 🔒 We now warn about email addresses written in documentation and formatted text, as we already did in text.
+- 🔗 Links to the guide that come right after a Hebrew prefix like ב- or after a period now open the guide, instead of becoming email links.
+
 ## 0.38.4 - 2026-10-03
 
 ### Added

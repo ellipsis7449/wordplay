@@ -503,7 +503,7 @@ It's possible to check whether an environment has a particular locale selected w
 🌎/en
 ```
 
-This will return `⊤` if the locale is in the preferred list, and, `⊥` otherwise.
+This will return `⊤` if the locale is one the reader chose, and `⊥` otherwise. A tag without a region matches any region of that language. The editor and every place a project plays ask the same list — the reader's, not the project's — and the English that backs up untranslated interface text is not on it, so `🌎/en` is only true for a reader who chose English.
 
 Text can also be templates, with aribtrary expressions that are automatically converted to text:
 
@@ -676,7 +676,7 @@ And this is also `1`:
 [1 2 3 4 5][-5]
 ```
 
-Because indices wrap, no index is ever out of range. There are only three ways a list access evaluates to `ø`: an index of `0`, since lists are indexed from `1`; an index that isn't a whole number; and any index into an empty list, which has no values to wrap onto. For convenience, however, this possibility isn't included in a list access's type, as it would require pervasive, and mostly unhelpful checking for `ø`. This does let type errors slip through as runtime errors, but was chosen to avoid imposing type gymnastics on learners. It also means `??` on a list access is a conflict, since the access's type doesn't include `ø` for it to coalesce.
+Because indices wrap, no index is ever out of range. There are only three ways a list access evaluates to `ø`: an index of `0`, since lists are indexed from `1`; an index that isn't a whole number; and any index into an empty list, which has no values to wrap onto. `replace` wraps the same way, so `[1 2 3].replace(5 9)` replaces the item `[1 2 3][5]` reads, and changes nothing for those same three indices. For convenience, however, this possibility isn't included in a list access's type, as it would require pervasive, and mostly unhelpful checking for `ø`. This does let type errors slip through as runtime errors, but was chosen to avoid imposing type gymnastics on learners. It also means `??` on a list access is a conflict, since the access's type doesn't include `ø` for it to coalesce.
 
 A list access's type is usually the type of any item in the list. But when the list's type gives a type per position (see `LISTTYPE` under [Types](#types)) and the index is a constant in range, the access has the type of exactly that position.
 
@@ -1625,7 +1625,7 @@ There are three places that comments can appear in code: just before programs, j
 
 Documentation is part of the grammar, not just discarded text in parsing. This allows for unambiguous association between text and documentation.
 
-Docs separated by at most one newline are one **group** — the locale variants of a single doc (`¶hello¶/en ¶hola¶/es`) — and a blank line ends a group. At the start of a program that grouping decides who a doc belongs to, which the grammar cannot say on its own: a leading group **touching** what follows it documents that, like every other doc, and it is the program's own documentation only when nothing adjacent can take it — a blank line follows, a `↓` borrow follows, or the source ends there. A program may open with several separated groups; all of them are its own, except a last one that touches the statement below it.
+Docs separated by at most one newline are one **group** — the locale variants of a single doc (`¶hello¶/en ¶hola¶/es`) — and a blank line ends a group. At the start of a program that grouping decides who a doc belongs to, which the grammar cannot say on its own: a leading group **touching** what follows it documents that, like every other doc, and it is the program's own documentation only when nothing adjacent can take it — a blank line follows, a `↓` borrow follows, or the source ends there. A program may open with several separated groups; all of them are its own, except a last one that touches the statement below it. A `\…\` example in markup is a program too and follows the same rule, its closing `\` ending its source, so an example means what the same code means in an editor.
 
 ```
 ¶The colour of a sunset.¶        ¶Colours I like.¶
@@ -1762,6 +1762,8 @@ An image is **one** output. It has one place, one pose and one body, so its squa
 
 A `Phrase` may carry a **speech bubble**, so a line of dialog belongs to whoever says it rather than being a second phrase placed near them. Its `bubble` takes text or markup, a `Say`, or a `Bubble` naming all of it. A bubble is a decoration rather than layout: like an `Aura` it is absent from the phrase's measured box, so an arrangement makes no room for one and the automatic camera does not widen to keep one in view — a bubble near the edge of the stage is clipped by it. It is drawn beside the phrase on the `side` it names (`'↑'`, `'↓'`, `'←'`, `'→'`, defaulting to up), with a tail pointing back at the speaker. Its `kind` is either said (`'💬'`) or thought (`'💭'`), which draws the tail as a point or as a trail of circles. Its `color` defaults to the phrase's own, its `size` to the size text ordinarily is on the stage rather than the speaker's — a character is often several metres tall, and dialog set at that size is a wall rather than a line — and its words change with the phrase's own `changing` effect, so one setting paces both the character and what it says. Given a `Say`, a bubble is spoken aloud as well as shown, and it then stands in for the caption a bare `Say` puts at the foot of the stage, since the words are already on screen attached to whoever said them.
 
+A `Phrase` may also give its glyphs `poses`: a `Pose`, or a list of them that the glyphs take in turn, wrapping around. A glyph is a grapheme (a custom character counts as one, and so does a space), and the cycle continues across a markup's formatting and across the languages of multilingual text. Each glyph turns, scales and moves around its own centre, inside the phrase's own transform, so a single pose tilts every glyph in place while the line stays straight. A glyph's `color` overrides the phrase's and any animated pose's, and its `opacity` multiplies with the phrase's. Glyph poses take no part in animation: they are not tweened, and they change only when the program re-evaluates them. Like a bubble they are absent from the phrase's measured box. Rendering stays a single run unless `poses` is given.
+
 Every child of the stage is placed where its own `place` says, and a child with no `place` is centred. Several placeless outputs therefore land on top of one another, which is what `place` is for. Nothing is grouped implicitly: a `Group` appears only where a program writes one, so a program's output is never given an arrangement it did not ask for, is never shifted by one, and every top-level output takes part in the stage's physical world (see Collision above, which excludes only what is inside a `Group`).
 
 A `Group` gives its content an `Arrangement`, and **an arrangement places its children**: it moves each one to where it decides, keeping its size and its shape. `Stack` decides how far down each child goes and aligns them across itself; `Row` decides how far along and aligns them down itself; `Grid` decides both. A `place` a program writes on a child overrides the axis an arrangement merely _aligns_ — a stack's x, a row's y — but never the axis it arranges along, since that is what a stack or a row is for. `Free` decides nothing, so there every child sits at its own `place`, exactly as it does on the stage.
@@ -1781,3 +1783,24 @@ Three things decide what is finally seen, and they compose rather than override 
 - **The audience.** Panning and zooming (scroll, pinch, two-finger drag, the zoom controls) apply as an offset on top of whichever of the two above is in play. Because it is an offset and not a replacement, a viewer may zoom out of a project that moves its own camera without freezing it. Zooming out is unbounded; zooming in stops before the camera would reach the output plane.
 
 A stage's `overlay` is exempt from all of this: it is pinned flat to the screen and is unaffected by the camera.
+
+## Stage effects
+
+A `Stage`'s optional `effects` (`[Effect]|ø`, defaulting to `ø`) lays effects over everything the stage shows, the way a film is graded, scratched, or seen through water. `Effect` is an interface with no inputs, like `Form` and `Arrangement`; the ten structures that implement it are the effects:
+
+| Effect      | Inputs                                                                       | What it does                                                               |
+| ----------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `Blur`      | `amount•#m: 0.05m`                                                           | softens everything beneath it                                              |
+| `Grade`     | `brightness•%: 100%`, `contrast•%: 100%`, `saturation•%: 100%`, `hue•#°: 0°` | adjusts tone and color, like a film's color grade                          |
+| `Tint`      | `color•🌈`, `amount•%: 50%`                                                  | washes everything in one color, keeping its lightness                      |
+| `Haze`      | `amount•%: 50%`, `color•🌈\|ø: ø`, `speed•#: 1`                              | veils the stage in drifting fog (white when `ø`)                           |
+| `Grain`     | `amount•%: 30%`, `size•#: 1`, `color•?: ⊥`                                   | speckles with noise that changes every frame                               |
+| `Scanlines` | `amount•%: 30%`, `spacing•#m: 0.1m`, `speed•#: 0`                            | draws a television's horizontal lines, rolling at `speed` lines per second |
+| `Wave`      | `amount•#m: 0.2m`, `scale•#m: 2m`, `speed•#: 1`                              | ripples the stage's content                                                |
+| `Damage`    | `scratches•%: 50%`, `dust•%: 50%`                                            | scatters an old film's scratches and dust, different every frame           |
+| `Flicker`   | `amount•%: 20%`, `rate•#: 2`                                                 | holds steady, then dips dark for a moment at uneven times                  |
+| `Vignette`  | `amount•%: 50%`, `color•🌈\|ø: ø`                                            | darkens the edges (to black when `ø`)                                      |
+
+Effects apply in list order, each to the result of those before it, with one exception: `Wave` distorts the content itself, beneath every other effect. Effects cover the stage's content and background but never its `overlay`. A setting outside its range is clamped rather than refused: amounts to `0%`–`100%`, and `Flicker`'s `rate` to at most 2.5 per second, under the photosensitive band, whatever the program asks for. Heavy `Grain` or `Scanlines` (`amount` of `50%` or more) is reported as a pattern risk to viewers before a project plays. When the viewer has asked to reduce motion, every effect is drawn as one still frame. A stage's description names its effects, so a screen reader hears when the look of a stage changes.
+
+There is no way to define a new kind of effect. A reusable look is a function that evaluates to a list of effects, whose inputs are the look's settings. Moving the whole stage, such as shaking it, needs no effect, since a stage takes poses and sequences like any other output.
