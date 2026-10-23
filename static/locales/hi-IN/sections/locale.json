@@ -213,7 +213,8 @@
         "outputTerm": "आउटपुट",
         "errorTerm": "त्रुटि",
         "typeTerm": "प्रकार",
-        "valueTerm": "मान"
+        "valueTerm": "मान",
+        "caseTerm": "दशा"
     },
     "moderation": {
         "warning": {
