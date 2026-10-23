@@ -4,11 +4,10 @@ We'll note all notable changes in this file, including bug fixes, enhancements, 
 Dates are in `YYYY-MM-DD` format and versions are in [semantic versioning](http://semver.org/) format.
 These notes are publicly posted in [production](https://wordplay.dev/updates), so we write them to an audience of teachers and youth.
 
-## 0.39.0 - 2026-10-10
+## 0.40.0 - 2026-10-17
 
 ### Added
 
-- 🎉 `Phrase` has a new `poses` input that gives each letter its own color, tilt, size, or position, taking turns through a list of `Pose`.
 - 🎞️ `Stage` has a new `effects` input that lays film looks over everything on it, like `Blur`, `Grain`, `Wave`, `Damage`, and `Flicker`, with a new how-to in the [Guide](https://wordplay.dev/guide).
 - ✍️ You can now change the code examples on the [home page](https://wordplay.dev/) and in the Guide and watch them run right away, and ↺ puts back the original.
 - 🌐 We added support for Roman Urdu (`ur-Latn-PK`), which is Urdu written with Latin letters! (#1457)
@@ -22,9 +21,19 @@ These notes are publicly posted in [production](https://wordplay.dev/updates), s
 ### Fixed
 
 - 🧭 The browser's Forward button now works in the [Guide](https://wordplay.dev/guide), and opening a link to one of its pages no longer shows a different page first.
-- 📖 Code examples in the [Guide](https://wordplay.dev/guide) no longer start with an empty line.
 - 🎞️ A `Stage` with its own `resting` animation no longer jumps away from where the camera shows it while the animation plays.
 - 🧭 Going back from a page in the [Guide](https://wordplay.dev/guide) returns to the list you opened it from.
+- 🌐 Code examples in other languages now use that language's own names for built-in types and functions, and we fixed many names that were translated with the wrong meaning, like a color's `lighter` becoming a cigarette lighter. (#1465)
+
+## 0.39.0 - 2026-10-10
+
+### Added
+
+- 🎉 `Phrase` has a new `poses` input that gives each letter its own color, tilt, size, or position, taking turns through a list of `Pose`.
+
+### Fixed
+
+- 📖 Code examples in the [Guide](https://wordplay.dev/guide) no longer start with an empty line.
 
 ## 0.38.6 - 2026-10-10
 
@@ -160,6 +169,7 @@ These notes are publicly posted in [production](https://wordplay.dev/updates), s
 - 📂 You can now open a project file on your [Projects](https://wordplay.dev/projects) page, either by choosing it or by dragging it onto the page. (#152)
 - 🖱️ You can drag a project file onto a project you already have to replace what's in it, and we'll ask you first. (#152)
 - ⌨️ You can now change any keyboard shortcut to keys your keyboard can reach, and your choices follow you to any computer you sign in on. (#826)
+- 🏫 Teachers can now make a class from students' school email addresses, instead of making a username and password for each student. (#1347)
 - 📖 We added a how-to and new glossary words to the [Guide](https://wordplay.dev/guide) that explain how a project can have more than one source file, and how to share and borrow between them. (#268)
 - 🧭 The tutorial now tells you that a project can have more than one source file, and offers you a tour of the project controls. (#268)
 
@@ -1120,6 +1130,7 @@ This week we made improvements to the output palette, output editing on stage, a
 - ⚡️ We made it possible to edit all aspects of output in the palette (#172, #173, #174).
 - 💨 We made changes to a @Phrase's text animate too, in addition to rotate, scale, color, and other properties.
 - ⌨️ We added a setting to change the behavior of the tab key (#758).
+- 🎨 You can now type a color into the color chooser, by its name or by any code a web page would use. (#443)
 - ⌨️ We added "soft" wrapping to the text editing mode, so long lines are easier to read (#1173).
 
 ### Changed
@@ -1554,7 +1565,7 @@ This week we focused on new and improved inputs and a new in-app localization mo
 ### Added
 
 - We added a new @Speech stream, so if you allow your microphone, projects can respond to speech (#394).
-- We added a machine translation of a Hebrew locale (#411).
+- We added a machine translation of a Hebrew locale (#441).
 - We added a machine translation of a Vietnamese locale (#985).
 - We made autocompletion of conversions smarter and less buggy.
 - We added a zoom control to code editors for accessibility (#772).
@@ -1671,6 +1682,7 @@ This week we focused on new and improved inputs and a new in-app localization mo
 - **Names in the guide**. We added all of the names of functions, structures, and streams to the guide, to make it easier to know the many multilingual names by which they can be referred (#934).
 - **Better drop downs**. We added fancy new drop down menus, to make it easier to select. _This only works in Chrome, but it should release in Safari soon._ (#729).
 - **A new updates page**! We made this page so you can see what changed recently; it isn't translated to all languages yet, but your browser may help (#351).
+- **Viewers and commenters**. You can now let someone see your project, or see it and chat about it, without letting them edit it, and a project in a gallery can be shown only to its curators (#819, #738).
 
 ### Changed
 
@@ -1694,6 +1706,7 @@ This week we focused on new and improved inputs and a new in-app localization mo
 - We added login links to messages asking you to log in (#892).
 - When some text is edited in one locale, we re-translate other locales if they haven't been written by a human yet.
 - We added keyboard shortcuts to switches (#913).
+- Galleries now have a how-to space, where curators and creators can share what they figured out with each other (#825).
 
 ### Fixed
 
@@ -2319,7 +2332,7 @@ Character editing improvements:
 - Updated minor versions of Svelte, SvelteKit, ESLint, Firebase, Prettier, Zod.
 - Enforce organized imports on save; removed import cycles.
 
-## 0.15.1 2024-02-08
+## 0.15.1 2025-02-08
 
 ### Added
 
@@ -2349,7 +2362,7 @@ Character editing improvements:
 
 - Updated firebase and firebase-functions.
 
-## 0.15.0 2024-01-26
+## 0.15.0 2025-01-26
 
 ### Added
 
@@ -2375,7 +2388,7 @@ Character editing improvements:
 
 - Updated minor versions of all dependencies.
 
-## 0.14.2 2024-01-18
+## 0.14.2 2025-01-18
 
 ### Fixed
 
@@ -2390,7 +2403,7 @@ Character editing improvements:
 - Removed locale annotations from tutorial text.
 - Only show code locale chooser if more than one locale present.
 
-## 0.14.1 2024-01-11
+## 0.14.1 2025-01-11
 
 ### Added
 
