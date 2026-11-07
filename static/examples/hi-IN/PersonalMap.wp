@@ -132,7 +132,7 @@ the keyboard arrows or clicking the stage.
 We use it to place the character.¶/en
 ¶यह धारा बीच में शुरु होता है, लेकिन कीबोर्ड या माउस के साथ बदल सकते हैं।
 हम इस के साथ character को मंच पर रखते हैं।¶/hi
-where/en,किधर/hi: स्थाननिर्धारण(स्थल(0m 0m))
+where/en,किधर/hi: स्थाननिर्धारण(अवस्थिति(0m 0m))
 
 ¶This takes all of the content above and renders it,
 putting each landmark on stage in a particular location
@@ -147,26 +147,26 @@ stream to check collisions.¶/en
 		वाक्यांश(
 			'🍂'
 			नाम: "Virginia"/en,"वर्जिनिया"/hi
-			स्थल: स्थल(-3m 0m)
+			स्थल: अवस्थिति(-3m 0m)
 			पदार्थ: पदार्थ()
 		)
 		वाक्यांश(
 			`@ellipsis/CuteDuckie`
 			नाम: "California"/en,"कॅलिफ़ोर्निया"/hi
-			स्थल: स्थल(-10m 0m)
+			स्थल: अवस्थिति(-10m 0m)
 			पदार्थ: पदार्थ()
 			आकार: 1.4m
 		)
 		वाक्यांश(
 			'🏕'
 			नाम: "India"/en,"भारत"/hi
-			स्थल: स्थल(5m -6m)
+			स्थल: अवस्थिति(5m -6m)
 			पदार्थ: पदार्थ()
 		)
 		वाक्यांश(
 			`@ellipsis/GoDawgs`
 			नाम: "Washington"/en,"वाशिंटन"/hi
-			स्थल: स्थल(-10m 6m)
+			स्थल: अवस्थिति(-10m 6m)
 			पदार्थ: पदार्थ()
 			आकार: 1.4m
 		)
@@ -178,8 +178,8 @@ stream to check collisions.¶/en
 			हिलना: अनुक्रम(
 				{
 					0%: मुद्रा()
-					50%: मुद्रा(ऑफ़सेट: स्थल(0m 1m 0m))
-					100%: मुद्रा(ऑफ़सेट: स्थल(0m 0m 0m))
+					50%: मुद्रा(ऑफ़सेट: अवस्थिति(0m 1m 0m))
+					100%: मुद्रा(ऑफ़सेट: अवस्थिति(0m 0m 0m))
 				}
 				अवधि: 0.5s
 			)
