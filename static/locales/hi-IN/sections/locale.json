@@ -58,7 +58,8 @@
             "definition": "किसी @value का एक हिस्सा, जैसे @Color की चमक।"
         },
         "element": {
-            "word": "तत्व",
+            "word": "वस्तु",
+            "forms": ["वस्तुओं"],
             "definition": "किसी @List या @Group में एक वस्तु।"
         },
         "scope": {
@@ -153,11 +154,11 @@
         },
         "key": {
             "word": "चाबी",
-            "definition": "एक @value जिसका उपयोग करते हैं किसी @Map में कोई वस्तु ढूँढने के लिए।"
+            "definition": "एक @value जिसका उपयोग करते हैं किसी @Map में कोई @element ढूँढने के लिए।"
         },
         "index": {
-            "word": "$~अनुक्रमणिका",
-            "definition": "एक @Number जो किसी @List में स्थान के अनुसार कोई वस्तु चुनता है।"
+            "word": "सूचकांक",
+            "definition": "एक @Number जो किसी @List में स्थान के अनुसार कोई @element चुनता है।"
         },
         "moved": {
             "word": "हिला हुआ",

@@ -168,7 +168,7 @@
                             "neutral",
                             "$~सूचियों और सरणियों जैसे value के संग्रहों के लिए, अन्य प्रोग्रामिंग भाषाएँ मौजूदा संग्रह के value से एक नया संग्रह बनाने के लिए *for* और *while* loop जैसे निर्माण उपयोग करती हैं।",
                             "\\py| n = [1, 2, 3]\n# List comprehension\n[n * 2 for n in nums]\n# For loop\nn2 = []\nfor n in nums:\n    n2.append(n * 2)\\js| n = [1, 2, 3];\n// Map\nnums.map(n => n * 2);\n// For loop\nn2 = [];\nfor (let n of nums) {\n    n2.push(n * 2);\n}\\jv| int[] nums = [1, 2, 3];\n// Map\nnums.stream().map(n -> n * 2);\n// For loop\nn2 = [];\nfor (int n : nums) {\n    n2.add(n * 2);\n}\\",
-                            "$~@wordplay में एक सरल @Translate* निर्माण है जो \\↦\\ चिह्न का उपयोग करता है: यह एक नई @List, @Set या @Map बनाता है, हर वस्तु ( \\⬚\\ @placeholder द्वारा दर्शाई गई) को एक नए @value से बदलता है। यह हर वस्तु को दोगुना करता है ताकि बने \\[2 4 6]\\।",
+                            "$~@wordplay में एक सरल @Translate* निर्माण है जो \\↦\\ चिह्न का उपयोग करता है: यह एक नई @List, @Set या @Map बनाता है, हर @element ( \\⬚\\ @placeholder द्वारा दर्शाई गई) को एक नए @value से बदलता है। यह हर @element को दोगुना करता है ताकि बने \\[2 4 6]\\।",
                             "$~@List.translate और @List.combine जैसी अधिक शक्तिशाली चीज़ें भी हैं, यदि आपको अधिक जटिल कार्यों की आवश्यकता हो।"
                         ],
                         null,

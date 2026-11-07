@@ -19,7 +19,7 @@ it's value stores a 'Rebound' object that contains the object collided with.¶/e
 में हो। जब टक्कर मिलता है, “मैं” वाला नाम एक ‘पलट’ रखता है। यह ‘पलट’ के पास
 है वह चीज़ जिसके साथ “मैं” वाला नाम टकराया था।¶/hi
 choice/en,चारा/hi: टक्कर('me'/en,'मैं'/hi)
-name/en,नाम/hi: (choice = ø ? "" choice.वस्तु)
+name/en,नाम/hi: (choice = ø ? "" choice.चीज़)
 
 ¶The words are written one line at a time, so this joins them back into a
 single run for the speech bubble to wrap however it likes.¶/en
