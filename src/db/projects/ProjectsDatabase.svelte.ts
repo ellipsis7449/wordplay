@@ -14,7 +14,6 @@ import { ensureAuth, firestore } from '#db/firebase.ts';
 import { isProxySession } from '#db/proxySession.ts';
 import firebaseErrorDetail from '#db/firebaseErrorDetail.ts';
 import { GALLERY_CHUNK_SIZE } from '#db/firestoreLimits.ts';
-import type Gallery from '#db/galleries/Gallery.ts';
 import isQuotaError from '#db/isQuotaError.ts';
 import { chunkWrites, serializedByteSize } from '#db/projects/chunkWrites.ts';
 import nextSaveRetryDelay from '#db/projects/saveRetry.ts';
@@ -74,6 +73,7 @@ import {
     type Unsubscribe,
 } from 'firebase/firestore';
 import { SvelteMap } from 'svelte/reactivity';
+import isListedFor from '#db/projects/isListedFor.ts';
 import { ExamplePrefix, getExample } from '../../examples/examples';
 
 /**
@@ -206,16 +206,18 @@ export default class ProjectsDatabase {
             .map((history) => history.getCurrent()),
     );
 
+    /** Whose projects the lists show: the signed-in creator, or while nobody is
+     *  signed in, whoever last was on this device. State rather than a read of
+     *  the database's user, which isn't reactive, so the lists follow sign-in;
+     *  read at the moment the cache hydrated, signed out, they kept every
+     *  cached project, classmates' included, for the rest of the session. */
+    private listUser: string | null = $state(null);
+
     /** A store of all user editable projects stored in projectsDB. Derived from editable projects above. */
     readonly allEditableProjects: Project[] = $derived(
-        this.currentProjects.filter((project) => {
-            if (project.isArchived()) return false;
-            const user = this.database.getUser();
-            if (user === null || project.getOwner() === null) return true;
-            if (project.isOwner(user.uid)) return true;
-            if (project.hasCollaborator(user.uid)) return true;
-            return false;
-        }),
+        this.currentProjects.filter((project) =>
+            isListedFor(project, this.listUser),
+        ),
     );
 
     /** A store of all archived projects stored in projectsDB. Derived from editable projects above. */
@@ -397,6 +399,7 @@ export default class ProjectsDatabase {
     constructor(database: Database) {
         this.database = database;
         this.localDB = database.localDB;
+        this.listUser = database.getUser()?.uid ?? database.getDeviceUser();
 
         // An example loads in the viewer's chosen locales (#1310), so a cached
         // one is stale the moment those change. Evict just the example keys;
@@ -608,6 +611,7 @@ export default class ProjectsDatabase {
         if (remove) this.deleteLocal();
 
         const user = this.database.getUser();
+        this.listUser = user?.uid ?? this.database.getDeviceUser();
 
         // If there's no firestore access, do nothing.
         if (firestore === undefined) return;
@@ -2695,29 +2699,6 @@ export default class ProjectsDatabase {
         } catch (_) {
             console.error(_);
             return undefined;
-        }
-    }
-
-    /** When a gallery changes, stop tracking any of its projects we were
-     *  tracking that are no longer in it.
-     *
-     *  We deliberately do NOT fetch newly-added gallery projects here. The
-     *  realtime projects query (the `gallery in` chunk listeners in `syncUser`)
-     *  already streams every project in the user's accessible galleries, so
-     *  fetching them here too meant one `getDoc` per gallery project on every
-     *  galleries snapshot — a redundant read burst on login that scaled with
-     *  galleries × projects-per-gallery (e.g. ~180 reads for a teacher in 10
-     *  galleries of ~18 projects). The realtime listener supplies them instead. */
-    async refreshGallery(gallery: Gallery) {
-        // Drop locally-tracked projects that are no longer in this gallery.
-        for (const [projectID, history] of this.projectHistories.entries()) {
-            const current = history.getCurrent();
-            if (
-                current.getGallery() === gallery.getID() &&
-                !gallery.getProjects().includes(projectID)
-            ) {
-                this.deleteLocalProject(projectID);
-            }
         }
     }
 }

@@ -419,6 +419,7 @@ export function getExampleGalleries(locales: Locales): Gallery[] {
             ),
             [
                 'Pears',
+                'CatWalk',
                 'Dialog',
                 'JapaneseClass',
                 'PersonalMap',

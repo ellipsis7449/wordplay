@@ -264,7 +264,7 @@
     } from '#db/settings/AnimationFactorSetting.ts';
     import type MenuInfo from '#edit/menu/Menu.ts';
     import { anchorMenu } from '#components/editor/menu/menuAnchor.ts';
-    import { must } from '#util/nullable.ts';
+    import { isDefined, must } from '#util/nullable.ts';
 
     interface Props {
         project: Project;
@@ -884,10 +884,11 @@
 
     /** The last project rendered. `onDestroy` runs after the parent has already
      * updated its state, so the `project` prop can read undefined there — which
-     * is exactly what it did when the page unmounted the view. */
+     * is exactly what it did when the page unmounted the view. The effect
+     * reruns with that undefined too, so it must not take it. */
     let lastProject = project;
     $effect(() => {
-        lastProject = project;
+        if (isDefined(project)) lastProject = project;
     });
 
     /** Clean up the evaluator when unmounting. */
@@ -963,11 +964,11 @@
         // saves a no-op history.edit + saveSoon.
         if (
             extracted.text === lastWrittenText &&
-            project.getPreview()?.mode === 'auto'
+            lastProject.getPreview()?.mode === 'auto'
         )
             return;
         lastWrittenText = extracted.text;
-        Projects.setAutoPreview(project.getID(), extracted);
+        Projects.setAutoPreview(lastProject.getID(), extracted);
     }
 
     $effect(() => {
@@ -4245,7 +4246,19 @@
 
         <!-- Render the menu on top of the annotations -->
         {#if menu && menuPosition}
-            <Menu bind:menu hide={hideMenu} position={menuPosition} />
+            <!-- Outside every tile's boundary, so a menu item that fails to
+                 render would otherwise take the whole page to the error page. -->
+            <svelte:boundary
+                onerror={(error) => {
+                    console.error(
+                        '[menu-render-error]',
+                        error instanceof Error ? (error.stack ?? error) : error,
+                    );
+                    hideMenu();
+                }}
+            >
+                <Menu bind:menu hide={hideMenu} position={menuPosition} />
+            </svelte:boundary>
         {/if}
 
         <!-- Saving a value as a file, asked for by the editor's menu or the
@@ -4276,15 +4289,27 @@
             >
                 <!-- One view per dragged node: a run is contiguous siblings, so
                      they read as the run they are when stacked in order. -->
-                {#each dragged as node (node.id)}
-                    <RootView
-                        {node}
-                        inline
-                        spaces={project.getSourceOf(node)?.spaces}
-                        locale={$locales.getLocale()}
-                        blocks={$blocks}
-                    />
-                {/each}
+                <!-- Outside every tile's boundary too: a dragged node that fails
+                     to render should cost its preview, not the page. -->
+                <svelte:boundary
+                    onerror={(error) =>
+                        console.error(
+                            '[drag-render-error]',
+                            error instanceof Error
+                                ? (error.stack ?? error)
+                                : error,
+                        )}
+                >
+                    {#each dragged as node (node.id)}
+                        <RootView
+                            {node}
+                            inline
+                            spaces={project.getSourceOf(node)?.spaces}
+                            locale={$locales.getLocale()}
+                            blocks={$blocks}
+                        />
+                    {/each}
+                </svelte:boundary>
             </div>
         {/if}
     {/if}

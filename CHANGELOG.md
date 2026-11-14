@@ -4,6 +4,32 @@ We'll note all notable changes in this file, including bug fixes, enhancements, 
 Dates are in `YYYY-MM-DD` format and versions are in [semantic versioning](http://semver.org/) format.
 These notes are publicly posted in [production](https://wordplay.dev/updates), so we write them to an audience of teachers and youth.
 
+## 0.42.0 - 2026-11-12
+
+### Fixed
+
+- 🤝 Projects shared to a gallery no longer vanish from it when a computer with an old copy of the gallery saves it.
+- 💾 The [Projects](https://wordplay.dev/projects) page no longer shows other people's projects that were saved on the same computer.
+- 🐛 A project you have open no longer closes with an error when its gallery changes.
+- 🌐 Translating a project no longer fails when it has a type and a value with the same name, like `Page` and `page`.
+- ✍️ Putting a custom character inside quotes no longer changes the quotes, so the character shows on stage right away.
+
+## 0.41.0 - 2026-11-07
+
+### Added
+
+- 🌐 We added Russian, Ukrainian, Malayalam, Cantonese, and Taiwanese Hokkien (written in Tâi-lô), so more of you can use Wordplay in the language you speak at home!
+- 🏫 Teachers can now make an account for a student who joins a class late, right from the class page.
+
+### Changed
+
+- 🧩 In blocks mode, the `+` after a list now adds an empty spot you can type into, its menu suggests more of what the list already holds, and each number shows one unit menu instead of two. (#1484)
+
+### Fixed
+
+- 🔑 Joining with a username and password no longer says it failed when it actually made your account, and trying again now signs you in.
+- 🧩 The code palette in blocks mode no longer closes when you miss a block, no longer shows blocks that look the same, and gives tiny blocks a box that's easier to grab. (#1484)
+
 ## 0.40.1 - 2026-10-31
 
 ### Fixed

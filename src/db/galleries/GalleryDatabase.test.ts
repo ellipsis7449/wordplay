@@ -230,7 +230,6 @@ type DatabaseFakeWithDomains = DatabaseFake & {
         edit: ReturnType<typeof vi.fn>;
         getHistory: ReturnType<typeof vi.fn>;
         get: ReturnType<typeof vi.fn>;
-        refreshGallery: ReturnType<typeof vi.fn>;
         saveSoon: ReturnType<typeof vi.fn>;
         syncUser: ReturnType<typeof vi.fn>;
     };
@@ -283,7 +282,6 @@ describe('GalleryDatabase atomic project + gallery updates', () => {
                 edit: projectsEditMock,
                 getHistory: getHistoryMock,
                 get: vi.fn(async () => undefined),
-                refreshGallery: vi.fn(),
                 saveSoon: vi.fn(),
                 syncUser: vi.fn(),
             },
@@ -339,6 +337,28 @@ describe('GalleryDatabase atomic project + gallery updates', () => {
             // Everything the client does own still goes.
             expect(data).toHaveProperty('id', 'g-update');
             expect(data).toHaveProperty('curators');
+        });
+
+        it('adds to its membership lists rather than replacing them', async () => {
+            // A copy that stopped receiving snapshots (a dirty gallery skips
+            // them) wrote a class gallery's 29 projects back as 14.
+            await db.edit(
+                makeGallery('g-lists', {
+                    projects: ['p1', 'p2'],
+                    characters: [],
+                }),
+            );
+
+            const [, data] = must(
+                vi.mocked(setDoc).mock.calls[0],
+                'the setDoc call asserted above',
+            );
+            expect(data).toHaveProperty('projects', {
+                _op: 'arrayUnion',
+                elements: ['p1', 'p2'],
+            });
+            // An empty list has nothing to add; sending it would be a no-op union.
+            expect(data).not.toHaveProperty('characters');
         });
 
         it('writes the whole document when creating', async () => {
