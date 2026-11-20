@@ -119,15 +119,15 @@
                     "off": "$~tampilkan $name"
                 },
                 "showSource": {
-                    "on": "$~sembunyikan sumber $name",
-                    "off": "$~tampilkan sumber $name"
+                    "on": "$~sembunyikan editor untuk $name",
+                    "off": "$~tampilkan editor untuk $name"
                 }
             },
             "label": {
                 "output": "$~panggung",
                 "palette": "$~palet",
                 "docs": "$~memandu",
-                "source": "$~sumber",
+                "source": "$~editor",
                 "collaborate": "$~berkolaborasi"
             },
             "button": {
@@ -159,7 +159,7 @@
                 "addSource": "$~tambah satu lagi @Source: yang kosong, atau yang dibuat dari gambar atau lagu",
                 "revert": "$~kembali ke kode asli",
                 "focusOutput": "$~fokus keyboard di atas panggung",
-                "focusSource": "$~fokus pada sumber berikutnya",
+                "focusSource": "$~pindah fokus ke editor berikutnya",
                 "focusDocs": "$~fokus pada dokumentasi",
                 "focusPalette": "$~fokus pada palet warna",
                 "focusCycle": "$~fokus pada ubin berikutnya",
@@ -272,7 +272,7 @@
                 "launch": "$~ikuti tur kontrol proyek",
                 "controls": "$~Kontrol-kontrol di bagian bawah ini berlaku untuk *proyek secara keseluruhan*, terlepas dari ubin mana yang sedang Anda kerjakan.",
                 "name": "$~Kolom /nama/ adalah nama proyekmu. Nama muncul di tampilan *proyek* dan *galeri*.",
-                "sourceToggle": "$~Tombol ini menampilkan atau menyembunyikan *file sumber*. *Tombol lainnya* pada baris ini melakukan hal yang sama untuk ubin lainnya.",
+                "sourceToggle": "$~/Sakelar/ ini menampilkan atau menyembunyikan *editor* untuk sebuah *berkas sumber*. *Sakelar lainnya* di baris ini melakukan hal yang sama untuk ubin yang lain.",
                 "addSource": "$~Beberapa proyek lebih baik memakai *banyak* sumber, di mana data disimpan di satu sumber lalu diambil ke sumber *utama*. Tombol /tambah sumber/ menawarkan beberapa cara membuatnya: berkas kosong, gambar, lagu, atau data.",
                 "share": "$~Dialog /share/ memungkinkan Anda untuk membagikan proyek Anda dengan *galeri*, dengan *publik*, atau menyalinnya sebagai *teks* untuk dibagikan di tempat lain.",
                 "checkpoints": "$~Panel /revisi/ memungkinkan Anda untuk kembali ke versi proyek sebelumnya, dan mengambil snapshot versi yang ingin Anda simpan.",
@@ -685,8 +685,6 @@
             }
         },
         "source": {
-            "label": "$~sumber",
-            "title": "$~kode",
             "empty": [
                 "$~Mari kita mulai! Anda bisa…",
                 "• Buka 📕 dan seret 🖱️ kami ke program ini.",
@@ -1062,7 +1060,13 @@
                 "microphone": "$~mikropon",
                 "camera": "$~kamera",
                 "note": "$~Browser Anda akan meminta izin sebelum berbagi.",
-                "retry": "$~Mencoba kembali"
+                "retry": "$~Mencoba kembali",
+                "blocked": {
+                    "chromium": "$~Browser kamu memblokir $permission di sini, jadi aku tidak bisa meminta lagi. Klik ikon di sebelah kiri alamat web, aktifkan $permission, lalu pilih $retry.",
+                    "safari": "$~Browser kamu memblokir $permission di sini, jadi aku tidak bisa meminta lagi. Buka Pengaturan Situs Web (di menu Safari pada Mac, atau menu halaman di dekat alamat pada iPhone atau iPad), izinkan $permission, lalu pilih $retry.",
+                    "firefox": "$~Browser kamu memblokir $permission di sini, jadi aku tidak bisa meminta lagi. Klik ikon $permission yang dicoret di bilah alamat, hapus pemblokirannya, lalu pilih $retry.",
+                    "other": "$~Browser kamu memblokir $permission di sini, jadi aku tidak bisa meminta lagi. Izinkan $permission di pengaturan browser kamu untuk situs ini, lalu pilih $retry."
+                }
             },
             "multiselect": "$~Gunakan tombol Tab, Alt, dan panah untuk berpindah antar output. Tekan spasi untuk menambah atau menghapus output yang sedang aktif dari pilihan Anda. Tekan Enter untuk memilih hanya output tersebut dan membuka palet. Tekan Escape untuk menghapus pilihan Anda. Tekan Control atau Command dan A untuk memilih semua output.",
             "selected": "$~$name terpilih, $count terpilih",
@@ -2554,7 +2558,7 @@
             "button": {
                 "edit": "$~Sarankan pengeditan pada teks ini",
                 "editTip": "$~Sarankan pengeditan pada tooltip kontrol ini.",
-                "submit": "$~Kirim saran pengeditan",
+                "submit": "$~Simpan suntingan ini di perangkat ini",
                 "cancel": "$~Abaikan saran pengeditan.",
                 "revert": "$~Kembali ke teks resmi",
                 "prev": "$~Edit item sebelumnya",
@@ -2638,6 +2642,14 @@
                 "conceptName": "$~Dokumentasi sudah menjelaskan kata ini, jadi tautan ke kata ini akan mengarah ke sana.",
                 "alreadyUsed": "$~Ini sudah menjadi salah satu bentuk dari $term, jadi tidak akan jelas istilah mana yang kamu maksud.",
                 "searchOnly": "$~Tautan berakhir pada spasi atau simbol, jadi bentuk ini hanya akan membantu pencarian."
+            },
+            "drafts": "$~Suntinganmu disimpan di perangkat ini. Kalau sudah siap, kirim dari ruang kerja lokalisasi supaya semua orang bisa melihatnya.",
+            "save": {
+                "saved": "$~Disimpan di perangkat ini",
+                "reverted": "$~Teks resmi dikembalikan",
+                "failed": "$~Suntingan ini tidak bisa disimpan. Coba lagi.",
+                "savedAnnouncement": "$~Disimpan di perangkat ini: $text",
+                "revertedAnnouncement": "$~Teks resmi dikembalikan: $text"
             }
         },
         "edit": {
@@ -2674,7 +2686,7 @@
             "unwritten": "$~Akan ditentukan kemudian",
             "unparsable": "$~Templat yang tidak dapat diuraikan: $template",
             "machineTranslated": "$~Ini adalah terjemahan mesin, jadi mungkin tidak mudah dibaca atau tidak akurat.",
-            "locallyRevised": "$~Teks ini telah direvisi secara lokal dan berbeda dari terjemahan resmi."
+            "locallyRevised": "$~Kamu menyunting ini. Suntinganmu disimpan di perangkat ini sampai kamu mengirimnya dari ruang kerja lokalisasi."
         },
         "emoji": {
             "noCharacters": "$~Buat karakter kustom",

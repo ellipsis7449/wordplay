@@ -119,15 +119,15 @@
                     "off": "$~$name を見せる"
                 },
                 "showSource": {
-                    "on": "$~ソース $name を隠す",
-                    "off": "$~ソース $name を表示する"
+                    "on": "$~$name のエディターをかくす",
+                    "off": "$~$name のエディターを表示する"
                 }
             },
             "label": {
                 "output": "$~ステージ",
                 "palette": "$~パレット",
                 "docs": "$~ガイド",
-                "source": "$~ソース",
+                "source": "$~エディター",
                 "collaborate": "$~共同作業する"
             },
             "button": {
@@ -155,7 +155,7 @@
                 "addSource": "$~別の@Sourceを追加する：空のものか、写真や曲から作られたもの",
                 "revert": "$~元のコードに戻す",
                 "focusOutput": "$~キーボードの操作をステージに合わせる",
-                "focusSource": "$~次のソースに合わせる",
+                "focusSource": "$~次のエディターにフォーカスを移す",
                 "focusDocs": "$~ドキュメントに合わせる",
                 "focusPalette": "$~パレットに合わせる",
                 "focusCycle": "$~次のタイルに合わせる",
@@ -272,7 +272,7 @@
                 "launch": "$~プロジェクトの操作をひととおり見て回る",
                 "controls": "$~下にあるこれらの/操作/は、どのタイルで作業していても*プロジェクト全体*に効きます。",
                 "name": "$~/名前/フィールドはあなたのプロジェクトの名前です。名前は*プロジェクト*と*ギャラリー*の表示に出てきます。",
-                "sourceToggle": "$~この/切り替え/は*ソースファイル*を表示したり隠したりします。この行の*他の切り替え*は他のタイルに同じことをします。",
+                "sourceToggle": "$~この/切りかえボタン/は、*ソース*の*エディター*を表示したり、かくしたりします。この列にある*ほかの切りかえボタン*は、ほかのタイルに対して同じことをします。",
                 "addSource": "$~プロジェクトの中には、データを1つのソースに保存して、それを*メインの*ソースに取り込む方が便利な場合があります。これには*複数の*ソースファイルを使います。「ソースを追加」ボタンを押すと、作り方を選べます。空のファイル、写真、曲、データのいずれかです。",
                 "share": "$~/共有/ダイアログでは、プロジェクトを*ギャラリー*や*一般の人*と共有したり、*テキスト*としてコピーして別の場所で共有したりできます。",
                 "checkpoints": "$~/履歴/パネルを使うと、プロジェクトの前のバージョンに*戻る*ことができます。また、覚えておきたいバージョンを*スナップショット*として保存できます。",
@@ -427,11 +427,10 @@
             }
         },
         "source": {
-            "label": "$~ソース",
             "empty": [
                 "$~さあ始めましょう！次のことができます…",
                 "• 📕を開いて、🖱️で私たちをこのプログラムにドラッグする。",
-                "• $symbol、メニューから私たちを選ぶ。",
+                "• $symbolを入力して、メニューから私たちを選ぶ。",
                 "• ⌨️で私たちを入力する。",
                 "• ひらめきを得るために<ギャラリー@://galleries>を見て回る。",
                 "困ったときは、<もっと学ぶ@://learn>。"
@@ -602,14 +601,13 @@
                 "locale": {
                     "tip": "$~ソースの優先言語",
                     "all": "$~$#count[$count 言語]",
-                    "viewing": "$~$language"
+                    "viewing": "$~$languageで"
                 }
             },
             "error": {
                 "invalidName": "$~これは正しいWordplayの名前でなければなりません。",
                 "invalidWords": "$~単語を空にしたり、予約された記号を含めたりはできません。"
             },
-            "title": "$~コード",
             "tour": {
                 "launch": "$~エディターを見て回る",
                 "editor": "$~あなたの/コード/はすべて*エディター*に入ります。すべての@wordplayプログラムは*値になります*。その値が*ステージ*に表示されます。",
@@ -736,7 +734,7 @@
             "label": "$~衝突とヘルプ",
             "cursor": "$~これは *$node*$type[ で、$type| です]。",
             "cursorDoc": "$~こう言っています：「$description」",
-            "cursorParent": "$~それらは*$node*$type[の中にあり、$type。|]",
+            "cursorParent": "$~それらは*$node*$type[の中にあり、$typeに評価されます。|の中にあります。]",
             "learn": "$~/もっと学ぶ/",
             "evaluating": "$~わくわくしますね、評価してみましょう！",
             "space": "$~これは空白です！何もないものがこんなに多くを語れるなんて、知っていましたか？",
@@ -784,7 +782,7 @@
                 "resize": "$~$name の大きさを変える",
                 "resetZoom": "$~移動とズームをリセットする",
                 "perform": "$~上演：プログラムを最初から実行して、画面をステージでいっぱいにする",
-                "resetZoomAt": "$~パンとズームをリセットしました。今はプロジェクトの表示の$percent"
+                "resetZoomAt": "$~パンとズームをリセットしました。今はプロジェクトの表示の$percentパーセントです"
             },
             "options": {
                 "locale": "$~出力の優先言語",
@@ -804,12 +802,18 @@
                 "microphone": "$~マイク",
                 "camera": "$~カメラ",
                 "note": "$~ブラウザは共有する前に確認します。",
-                "retry": "$~もう一度試す"
+                "retry": "$~もう一度試す",
+                "blocked": {
+                    "chromium": "$~ブラウザーがここで$permissionをブロックしたので、もう一度たずねることができません。ウェブアドレスの左にあるアイコンをクリックして、$permissionをオンにしてから、$retryを選んでください。",
+                    "safari": "$~ブラウザーがここで$permissionをブロックしたので、もう一度たずねることができません。「Webサイトの設定」を開いてください（Macでは Safari のメニュー、iPhone や iPad ではアドレスのそばにあるページのメニューにあります）。$permissionを許可してから、$retryを選んでください。",
+                    "firefox": "$~ブラウザーがここで$permissionをブロックしたので、もう一度たずねることができません。アドレスバーにある、斜線の入った$permissionのアイコンをクリックして、ブロックを外してから、$retryを選んでください。",
+                    "other": "$~ブラウザーがここで$permissionをブロックしたので、もう一度たずねることができません。ブラウザーの設定で、このサイトの$permissionを許可してから、$retryを選んでください。"
+                }
             },
             "multiselect": "$~タブキーと、altキーや矢印キーを使って出力の間を移動します。スペースを押すと、選択中の出力を選択に追加したり外したりできます。エンターを押すと、その出力だけを選んでパレットを開きます。エスケープを押すと選択を消します。controlまたはコマンドとAを押すと、すべての出力を選びます。",
             "selected": "$~$name を選択、$count 個選択中",
             "deselected": "$~$name の選択を解除、$count 個選択中",
-            "allSelected": "$~すべての出力を選択しました、$count",
+            "allSelected": "$~すべての出力を選択しました、$count個を選択中",
             "cleared": "$~選択を消しました",
             "moved": "$~$name が $direction に $place まで移動した",
             "directions": [
@@ -889,8 +893,8 @@
                 "any": "$~タップして再生"
             },
             "announce": {
-                "zoom": "$~ステージのズーム $percent",
-                "hidden": "$~$percent。ズームをリセットするとすべて表示されます",
+                "zoom": "$~ステージのズーム $percentパーセント",
+                "hidden": "$~$percentパーセントではステージに何もありません。ズームをリセットするとすべて表示されます",
                 "shown": "$~すべてがステージに戻りました"
             },
             "hidden": {
@@ -907,9 +911,9 @@
                     "$~上端",
                     "$~ベースライン"
                 ],
-                "withOutput": "$~$anchor$target$targetAnchor",
+                "withOutput": "$~$anchorを$targetの$targetAnchorに合わせる",
                 "withGrid": "$~グリッド上の$anchor",
-                "aligned": "$~$constraints$place",
+                "aligned": "$~$constraints、位置は$place",
                 "none": "$~$direction に揃えるものがありません"
             },
             "removed": "$~$#count[出力を$#count個削除しました]",
@@ -918,7 +922,7 @@
             "drawing": "$~$#count[$#count個の点、$placeにある]",
             "point": {
                 "label": "$~$#count個中$number番目の点、$placeにある",
-                "moved": "$~点$number$place",
+                "moved": "$~点$numberを$placeに移動しました",
                 "added": "$~点 $number を追加しました",
                 "removed": "$~点 $number を削除しました",
                 "last": "$~道には少なくとも2つの点が必要だよ"
@@ -2003,14 +2007,14 @@
                 "removed": "$~$name はもうこのプロジェクトにアクセスできません",
                 "thread": "$~$#count[$nameのメッセージへのスレッド、$count件の返信]",
                 "reacted": "$~$#count[このメッセージへの$emoji、$count人]",
-                "unreacted": "$~$#count[$emojiを取り消しました、$count人が取り消しました]",
+                "unreacted": "$~$#count[$emojiを取り消しました。残りは$count人]",
                 "attached": "$~$location について話しています。",
                 "found": "$~$name が $opening と言いました"
             },
             "translate": {
                 "label": "$~翻訳先の言語",
                 "off": "$~翻訳を止める",
-                "error": "$~これらのメッセージを$to。少し時間をおいてもう一度試してください。",
+                "error": "$~これらのメッセージを$toに翻訳できませんでした。少し時間をおいてもう一度試してください。",
                 "messageError": "$~このメッセージを翻訳できませんでした。",
                 "messageErrors": "$~$#count[$count件のメッセージを翻訳できませんでした。]",
                 "direction": "$~$from → $to",
@@ -2151,7 +2155,7 @@
             },
             "music": {
                 "staff": "$~このトラックの音符",
-                "track": "$~トラック $count 個中 $total 番目",
+                "track": "$~トラック $total 個中 $count 番目",
                 "duration": {
                     "label": "$~新しい音符が続く長さ",
                     "labels": ["$~𝅝", "$~𝅗𝅥", "$~𝅘𝅥", "$~𝅘𝅥𝅮", "$~𝅘𝅥𝅯"],
@@ -2278,8 +2282,8 @@
         "edit": {
             "node": "$~$node$type[、$type|]",
             "before": "$~$after[$after|end]の前",
-            "inside": "$~$token、$before[$before|start]と$after[$after|end]の間",
-            "between": "$~$before[$before|start]$after[$after|end]",
+            "inside": "$~$tokenの中、$before[$before|start]と$after[$after|end]の間",
+            "between": "$~$before[$before|開始]から$after[$after|終了]の間",
             "line": "$~$before[$before|start]と$after[$after|end]の間の空行",
             "conflicts": "$~$#count[$count 個の衝突]",
             "assign": "$~/$name[参加したい|去ろうとしている]…/",
@@ -2287,7 +2291,7 @@
             "remove": "$~/去ろうとしている…/",
             "replace": "$~/入りたい…/",
             "area": "$~コードを入力する",
-            "delimiterMatchedSameLine": "$~同じ行の$name",
+            "delimiterMatchedSameLine": "$~同じ行の$nameと対応",
             "delimiterMatchedBelow": "$~$name に一致 $#lines[下に $lines 行]",
             "delimiterMatchedAbove": "$~$name に一致 $#lines[上に $lines 行]",
             "delimiterUnmatched": "$~一致する区切りがありません",
@@ -2309,7 +2313,7 @@
             "unwritten": "$~未定",
             "unparsable": "$~解析できないテンプレート: $template",
             "machineTranslated": "$~これは機械翻訳されたものなので、読みにくかったり正しくなかったりすることがあります。",
-            "locallyRevised": "$~このテキストはこの端末で書き直されていて、公式の翻訳とは違います。"
+            "locallyRevised": "$~あなたはこれを編集しました。編集内容は、ローカライズ作業スペースから送信するまで、このデバイスに保存されます。"
         },
         "howto": {
             "galleryView": {
@@ -2634,7 +2638,7 @@
             },
             "button": {
                 "edit": "$~この文章の編集を提案する",
-                "submit": "$~提案した編集を送る",
+                "submit": "$~この編集をこのデバイスに保存する",
                 "cancel": "$~提案した編集を捨てる",
                 "revert": "$~公式の文章に戻す",
                 "editTip": "$~このコントロールのツールチップの編集を提案する",
@@ -2716,10 +2720,18 @@
                 "add": "$~この書き方を用語に追加する",
                 "remove": "$~この書き方を用語から削除する",
                 "ownWord": "$~これはこの用語自体の単語なので、すでに単独で使えます。",
-                "otherWord": "$~これは$term、どちらの用語を指しているかわかりにくくなります。",
+                "otherWord": "$~これは$termを表す語なので、どちらの用語を指しているかわかりにくくなります。",
                 "conceptName": "$~ドキュメントにはすでにこの言葉の説明があるので、リンクするとそこへ移動してしまいます。",
-                "alreadyUsed": "$~これはすでに$term、どちらの用語を指しているかわかりにくくなります。",
+                "alreadyUsed": "$~これはすでに$termの形の一つなので、どちらの用語を指しているかわかりにくくなります。",
                 "searchOnly": "$~リンクは空白か記号のところで終わるので、この書き方は検索にしか役立ちません。"
+            },
+            "drafts": "$~編集内容はこのデバイスに保存されます。準備ができたら、ローカライズ作業スペースから送信して、みんなに見えるようにしましょう。",
+            "save": {
+                "saved": "$~このデバイスに保存済み",
+                "reverted": "$~公式のテキストを元に戻しました",
+                "failed": "$~この編集を保存できませんでした。もう一度試してください。",
+                "savedAnnouncement": "$~このデバイスに保存済み: $text",
+                "revertedAnnouncement": "$~公式のテキストを元に戻しました: $text"
             }
         },
         "tour": {
@@ -2782,7 +2794,7 @@
             "stepAtStart": "$~先頭に",
             "searchOpened": "$~コード内を検索",
             "searchClosed": "$~検索を閉じました",
-            "searchMatch": "$~$index 件中 $count 件目",
+            "searchMatch": "$~$count 件中 $index 件目",
             "searchNoMatches": "$~一致するものがありません",
             "menuOpened": "$~メニュー、$#count[$count 個の提案]",
             "menuEmpty": "$~候補がありません",
@@ -2923,7 +2935,7 @@
             "revising": "$~新しい言葉を入れています…",
             "started": "$~$#count[$countのフレーズ]を$languageに翻訳しています…",
             "progress": "$~$#total[$totalのフレーズ]中$doneを翻訳しました",
-            "finished": "$~あなたのプロジェクトは今、$language。",
+            "finished": "$~あなたのプロジェクトは今、$languageを話します。",
             "finishedPartial": "$~あなたのプロジェクトは今、$languageで話すようになりましたが、$#kept[$keptのフレーズ]は元の言葉のままです。"
         },
         "email": {
@@ -2947,12 +2959,12 @@
                     "chat": "$~新しいチャット"
                 },
                 "subject": {
-                    "reported": "$~あなたの$kind",
+                    "reported": "$~あなたの$kindが報告されました",
                     "received": "$~通報を受け取りました",
-                    "decision": "$~あなたの$kind",
+                    "decision": "$~あなたの$kindについての判断",
                     "review": "$~確認を待っているものがあります",
                     "warning": "$~あなたが共有したものについての警告",
-                    "listing": "$~あなたの$kind",
+                    "listing": "$~あなたの$kindの掲載についての判断",
                     "howto": "$~あなたのギャラリーに新しいやり方ガイドが追加されました"
                 },
                 "body": {
@@ -3025,7 +3037,7 @@
         },
         "proxy": {
             "banner": "$~あなたは今、他の誰かとしてWordplayを見ています。ここでは何も保存されません。相手はあなたがここにいることに気づきません。",
-            "as": "$~$name",
+            "as": "$~$nameとして",
             "remaining": "$~$#minutes[残り$minutes分]",
             "stop": {
                 "label": "$~停止",

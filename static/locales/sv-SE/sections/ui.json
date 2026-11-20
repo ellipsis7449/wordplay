@@ -119,15 +119,15 @@
                     "off": "$~visa $name"
                 },
                 "showSource": {
-                    "on": "$~dölj källa $name",
-                    "off": "$~visa källa $name"
+                    "on": "$~dölj redigeraren för $name",
+                    "off": "$~visa redigeraren för $name"
                 }
             },
             "label": {
                 "output": "$~etapp",
                 "palette": "$~palett",
                 "docs": "$~guide",
-                "source": "$~källa",
+                "source": "$~redigerare",
                 "collaborate": "$~samarbeta"
             },
             "button": {
@@ -155,7 +155,7 @@
                 "addSource": "$~lägg till en till @Source: en tom en, eller en gjord från en bild eller en sång",
                 "revert": "$~återgå till originalkoden",
                 "focusOutput": "$~fokus tangentbordet på scenen",
-                "focusSource": "$~fokusera på nästa källa",
+                "focusSource": "$~fokusera på nästa redigerare",
                 "focusDocs": "$~fokusera på dokumentationen",
                 "focusPalette": "$~fokusera på paletten",
                 "focusCycle": "$~fokusera på nästa bricka",
@@ -272,7 +272,7 @@
                 "launch": "$~ta en rundtur i projektkontrollerna",
                 "controls": "$~Dessa /controls/ längst ner gäller för *projektet som helhet*, oavsett vilken panel du arbetar i.",
                 "name": "$~Fältet /namn/ är ditt projekts namn. Namn visas i vyerna för *projekt* och *galleri*.",
-                "sourceToggle": "$~Denna /toggle/ visar eller döljer *källfilen*. De *andra växlarna* på den här raden gör detsamma för de andra panelerna.",
+                "sourceToggle": "$~Den här /växlaren/ visar eller döljer *redigeraren* för en *källfil*. *De andra växlarna* på den här raden gör samma sak för de andra rutorna.",
                 "addSource": "$~Vissa projekt mår bra av *flera* källor, där data sparas i en och hämtas in i *huvud*källan. Knappen /lägg till källa/ ger dig sätten att göra en: en tom fil, en bild, en sång, eller lite data.",
                 "share": "$~I dialogrutan /share/ kan du dela ditt projekt med *gallerier*, med *allmänheten*, eller kopiera det som *text* för att dela det någon annanstans.",
                 "checkpoints": "$~Panelen /revisions/ låter dig gå *tillbaka* till tidigare versioner av ditt projekt och *ögonblicksbilder* av versioner som du vill komma ihåg.",
@@ -432,7 +432,6 @@
             }
         },
         "source": {
-            "label": "$~källa",
             "empty": [
                 "$~Nu sätter vi igång! Du kan …",
                 "• Öppna 📕 och dra 🖱️ oss till det här programmet.",
@@ -614,7 +613,6 @@
                 "invalidName": "$~Detta måste vara ett giltigt ordspelsnamn.",
                 "invalidWords": "$~Ord får inte vara tomma eller innehålla reserverade symboler."
             },
-            "title": "$~koda",
             "tour": {
                 "launch": "$~ta en rundtur i redaktören",
                 "editor": "$~All din /kod/ hamnar i *editorn*. Varje @wordplay-program *utvärderas till ett värde*, och det värdet är vad som visas på *scenen*.",
@@ -809,7 +807,13 @@
                 "microphone": "$~mikrofon",
                 "camera": "$~kamera",
                 "note": "$~Din webbläsare kommer att fråga innan delning.",
-                "retry": "$~Försöka igen"
+                "retry": "$~Försöka igen",
+                "blocked": {
+                    "chromium": "$~Din webbläsare blockerade $permission här, så jag kan inte fråga igen. Klicka på ikonen till vänster om webbadressen, slå på $permission och välj sedan $retry.",
+                    "safari": "$~Din webbläsare blockerade $permission här, så jag kan inte fråga igen. Öppna webbplatsinställningar (i Safari-menyn på en Mac, eller i sidmenyn vid adressen på en iPhone eller iPad), tillåt $permission och välj sedan $retry.",
+                    "firefox": "$~Din webbläsare blockerade $permission här, så jag kan inte fråga igen. Klicka på den överstrukna ikonen för $permission i adressfältet, ta bort blockeringen och välj sedan $retry.",
+                    "other": "$~Din webbläsare blockerade $permission här, så jag kan inte fråga igen. Tillåt $permission i webbläsarens inställningar för den här webbplatsen och välj sedan $retry."
+                }
             },
             "multiselect": "$~Använd tabbtangenten, alt- och piltangenterna för att flytta mellan utdata. Tryck på mellanslag för att lägga till eller ta bort den fokuserade utdatan från ditt val. Tryck på enter för att välja endast den utdatan och öppna paletten. Tryck på escape för att rensa ditt val. Tryck på ctrl eller command och A för att välja alla utdata.",
             "selected": "$~$name valt, $count valt",
@@ -1255,7 +1259,7 @@
             "tour": {
                 "launch": "$~ta en rundtur med guiden",
                 "guide": "$~/guiden/ innehåller *dokumentation* för alla @wordplay:s begrepp och *förmågor* i *programmeringsspråket*.",
-                "mode": "$~Använd denna /toggle/ för att själv växla mellan *kod*- och *instruktioner*-avsnitten.",
+                "mode": "$~Använd denna /växlaren/ för att själv växla mellan *kod*- och *instruktioner*-avsnitten.",
                 "search": "$~Sökrutan är användbar för att *upptäcka* funktioner, eller för att snabbt hitta en *med namn*.",
                 "code": "$~Detta är /kod/-avsnittet. Det innehåller dokumentation för *programmeringsspråk* — byggstenarna du kan kombinera för att skapa program.",
                 "howto": "$~Detta är avsnittet /hur-gör-det-själv/. Det innehåller *användbara mönster* för att uppnå specifika beteenden i dina projekt."
@@ -2316,7 +2320,7 @@
             "unwritten": "$~TBD",
             "unparsable": "$~Oparserbar mall: $template",
             "machineTranslated": "$~Detta är maskinöversatt, så det kanske inte är läsbart eller korrekt.",
-            "locallyRevised": "$~Denna text har reviderats lokalt och skiljer sig från den officiella översättningen."
+            "locallyRevised": "$~Du har redigerat detta. Din ändring sparas på den här enheten tills du skickar in den från lokaliseringsarbetsytan."
         },
         "howto": {
             "galleryView": {
@@ -2641,7 +2645,7 @@
             },
             "button": {
                 "edit": "$~Föreslå en redigering av den här texten",
-                "submit": "$~Skicka in föreslagen redigering",
+                "submit": "$~Spara den här ändringen på den här enheten",
                 "cancel": "$~Ignorera föreslagen redigering",
                 "revert": "$~Återgå till officiell text",
                 "editTip": "$~Föreslå en redigering av den här kontrollens verktygstips",
@@ -2727,6 +2731,14 @@
                 "conceptName": "$~Dokumentationen definierar redan detta ord, så en länk till det skulle gå dit istället.",
                 "alreadyUsed": "$~Detta är redan en form av $term, så det skulle vara otydligt vilken term du menade.",
                 "searchOnly": "$~En länk slutar vid ett mellanslag eller en symbol, så denna form hjälper bara vid sökning."
+            },
+            "drafts": "$~Dina ändringar sparas på den här enheten. När du är redo skickar du in dem från lokaliseringsarbetsytan så att alla kan se dem.",
+            "save": {
+                "saved": "$~Sparad på den här enheten",
+                "reverted": "$~Den officiella texten är återställd",
+                "failed": "$~Ändringen kunde inte sparas. Försök igen.",
+                "savedAnnouncement": "$~Sparad på den här enheten: $text",
+                "revertedAnnouncement": "$~Den officiella texten är återställd: $text"
             }
         },
         "tour": {

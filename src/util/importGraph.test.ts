@@ -1048,13 +1048,28 @@ test('resolving a color needs no basis', () => {
 // membership lists rather than replacing them, is +1 file: `isListedFor.ts`, a
 // leaf that imports nothing, so the rule can be tested without the database.
 // `galleries` had no byte slack, so it moves by a hundredth.
+// Each moves by a hundredth, and no file is added, for the data loss fixes in
+// the databases every page carries: settings and gallery membership sent as
+// changes rather than whole documents, a chat retry that reads before it
+// writes, and unsaved projects set aside across a sign-out.
+//
+// Localization feedback (#1495) is **+0 files** and moves Page, home and projects by a
+// hundredth. Remembering localization mode lives in `LocalesSetting.ts`, and the
+// confirmation shown after a save (`LocaleEditStatus`) is dynamically imported the first
+// time something is saved; the bytes are the save-and-report logic in the two text
+// components every page renders and six new strings in en-US.json.
+//
+// Explaining a blocked camera or microphone (#1476) is **+0 files** and moves the
+// layout by a hundredth: four strings in en-US.json saying where each browser keeps
+// the setting, and the watcher in `permissions.ts` that starts the project when
+// it is allowed.
 test.each([
-    ['src/routes/+layout.svelte', 541, 4.23],
-    ['src/components/app/Page.svelte', 564, 4.48],
-    ['src/routes/[[locale]]/+page.svelte', 579, 4.58],
-    ['src/routes/[[locale]]/galleries/+page.svelte', 584, 4.59],
+    ['src/routes/+layout.svelte', 541, 4.25],
+    ['src/components/app/Page.svelte', 564, 4.5],
+    ['src/routes/[[locale]]/+page.svelte', 579, 4.6],
+    ['src/routes/[[locale]]/galleries/+page.svelte', 584, 4.6],
     // Raised from 4.61 for the yue and nan entries in LanguageCode.ts, which every page carries.
-    ['src/routes/[[locale]]/projects/+page.svelte', 593, 4.62],
+    ['src/routes/[[locale]]/projects/+page.svelte', 593, 4.64],
 ])('%s stays within its import budget', (entry, maxFiles, maxMB) => {
     const reach = reachFrom(entry, Root);
     expect(

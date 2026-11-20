@@ -1,6 +1,6 @@
 {
     "name": "wordplay",
-    "version": "0.42.0",
+    "version": "0.42.1",
     "type": "module",
     "imports": {
         "#components/*": "./src/components/*",
@@ -161,7 +161,7 @@
         "dotenv": "^18.0.9",
         "earcut": "^3.2.4",
         "firebase": "^13",
-        "fontkit": "^2",
+        "fontkit": "^3",
         "highlight.js": "^11",
         "pitchy": "^4",
         "shared-types": "file:./functions/src/shared",

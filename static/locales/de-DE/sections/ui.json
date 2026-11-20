@@ -119,15 +119,15 @@
                     "off": "$~$name zeigen"
                 },
                 "showSource": {
-                    "on": "$~Quelle $name verbergen",
-                    "off": "$~Quelle $name zeigen"
+                    "on": "$~den Editor für $name ausblenden",
+                    "off": "$~den Editor für $name anzeigen"
                 }
             },
             "label": {
                 "output": "$~Bühne",
                 "palette": "$~Palette",
                 "docs": "$~Führung",
-                "source": "$~Quelle",
+                "source": "$~Editor",
                 "collaborate": "$~zusammenarbeiten"
             },
             "button": {
@@ -151,7 +151,7 @@
                 "addSource": "$~eine weitere @Source hinzufügen: eine leere, oder eine aus einem Bild oder einem Lied gemachte",
                 "revert": "$~zum Originalcode zurückkehren",
                 "focusOutput": "$~Fokus Tastatur auf der Bühne",
-                "focusSource": "$~Konzentrieren Sie sich auf die nächste Quelle",
+                "focusSource": "$~zum nächsten Editor wechseln",
                 "focusDocs": "$~Fokus auf die Dokumentation",
                 "focusPalette": "$~Konzentrieren Sie sich auf die Palette",
                 "focusCycle": "$~Konzentriere dich auf die nächste Kachel",
@@ -272,7 +272,7 @@
                 "launch": "$~Machen Sie eine Tour durch die Projektsteuerung",
                 "controls": "$~Diese /Steuerelemente/ am unteren Rand gelten für das *Projekt als Ganzes*, unabhängig davon, in welchem Bereich Sie gerade arbeiten.",
                 "name": "$~Das Feld /name/ ist der Name deines Projekts. Namen erscheinen in den Ansichten *Projekt* und *Galerie*.",
-                "sourceToggle": "$~Dieser Schalter blendet die *Quelldatei* ein oder aus. Die *anderen Schalter* in dieser Zeile bewirken dasselbe für die anderen Kacheln.",
+                "sourceToggle": "$~Dieser /Schalter/ zeigt oder versteckt den *Editor* für eine *Quelldatei*. Die *anderen Schalter* in dieser Zeile machen das Gleiche für die anderen Kacheln.",
                 "addSource": "$~Manche Projekte profitieren von *mehreren* Quelldateien, bei denen Daten in einer gespeichert und in die *Haupt*-Quelle eingebunden werden. Der Knopf /Quelle hinzufügen/ bietet mehrere Wege dafür: eine leere Datei, ein Bild, ein Lied oder Daten.",
                 "share": "$~Über den Dialog „Teilen“ können Sie Ihr Projekt mit *Galerien*, mit der *Öffentlichkeit* teilen oder es als *Text* kopieren, um es an anderer Stelle zu teilen.",
                 "checkpoints": "$~Über das Panel /revisions/ können Sie zu früheren Versionen Ihres Projekts zurückkehren und Momentaufnahmen von Versionen erstellen, die Sie sich merken möchten.",
@@ -408,7 +408,6 @@
             }
         },
         "source": {
-            "label": "$~Quelle",
             "empty": [
                 "$~Los geht's! Du kannst …",
                 "• Öffne 📕 und ziehe 🖱️ uns in dieses Programm.",
@@ -590,7 +589,6 @@
                 "invalidName": "$~Dies muss ein gültiger Wortspielname sein.",
                 "invalidWords": "$~Wörter dürfen nicht leer sein oder reservierte Symbole enthalten."
             },
-            "title": "$~Code",
             "tour": {
                 "launch": "$~Machen Sie eine Tour durch den Editor",
                 "editor": "$~Ihr gesamter Code gehört in den Editor. Jedes @wordplay-Programm wird zu einem Wert ausgewertet, und dieser Wert wird auf der Bühne angezeigt.",
@@ -785,7 +783,13 @@
                 "microphone": "$~Mikrofon",
                 "camera": "$~Kamera",
                 "note": "$~Ihr Browser fragt Sie vor dem Teilen.",
-                "retry": "$~Wiederholen"
+                "retry": "$~Wiederholen",
+                "blocked": {
+                    "chromium": "$~Dein Browser hat $permission hier blockiert, deshalb kann ich nicht noch einmal fragen. Klicke auf das Symbol links neben der Webadresse, schalte $permission ein und wähle dann $retry.",
+                    "safari": "$~Dein Browser hat $permission hier blockiert, deshalb kann ich nicht noch einmal fragen. Öffne die Website-Einstellungen (im Safari-Menü auf einem Mac oder im Seitenmenü neben der Adresse auf einem iPhone oder iPad), erlaube $permission und wähle dann $retry.",
+                    "firefox": "$~Dein Browser hat $permission hier blockiert, deshalb kann ich nicht noch einmal fragen. Klicke in der Adressleiste auf das durchgestrichene Symbol für $permission, hebe die Blockierung auf und wähle dann $retry.",
+                    "other": "$~Dein Browser hat $permission hier blockiert, deshalb kann ich nicht noch einmal fragen. Erlaube $permission in den Einstellungen deines Browsers für diese Website und wähle dann $retry."
+                }
             },
             "multiselect": "$~Verwenden Sie die Tabulatortaste, die Alt-Taste und die Pfeiltasten, um zwischen den Ausgängen zu wechseln. Drücken Sie die Leertaste, um den ausgewählten Ausgang hinzuzufügen oder zu entfernen. Drücken Sie die Eingabetaste, um nur diesen Ausgang auszuwählen und die Palette zu öffnen. Drücken Sie die Esc-Taste, um die Auswahl aufzuheben. Drücken Sie Strg oder Befehl + A, um alle Ausgänge auszuwählen.",
             "selected": "$~$name ausgewählt, $count ausgewählt",
@@ -1097,7 +1101,7 @@
                     ]
                 },
                 "purpose": {
-                    "label": "$~Zweck",
+                    "label": "$~Code",
                     "labels": [
                         "$~Projekt",
                         "$~Kit",
@@ -1232,7 +1236,7 @@
                 "guide": "$~Der Leitfaden enthält die Dokumentation zu allen Konzepten und Funktionen der Programmiersprache @wordplay.",
                 "mode": "$~Verwenden Sie diesen Schalter, um selbst zwischen den Abschnitten *Code* und *Anleitung* umzuschalten.",
                 "search": "$~Das Suchfeld ist hilfreich, um Funktionen zu *entdecken* oder eine Funktion schnell *anhand ihres Namens* zu finden.",
-                "code": "$~Dies ist der Abschnitt /code/. Er enthält die Dokumentation der *Programmiersprache* – die Bausteine, die Sie zu Programmen kombinieren können.",
+                "code": "$~Dies ist der Abschnitt /Code/. Er enthält die Dokumentation der *Programmiersprache* – die Bausteine, die Sie zu Programmen kombinieren können.",
                 "howto": "$~Dies ist der Abschnitt „Anleitung“. Er enthält *nützliche Muster*, um bestimmte Verhaltensweisen in Ihren Projekten zu erzielen."
             },
             "breadcrumb": {
@@ -1499,7 +1503,7 @@
                         ]
                     },
                     "blocks": {
-                        "label": "$~Bearbeitungsmodus",
+                        "label": "$~Editor",
                         "labels": ["$~Text", "$~Blöcke"],
                         "tips": [
                             "$~Code als Text bearbeiten",
@@ -2161,7 +2165,7 @@
             "unwritten": "$~Wird noch bekannt gegeben",
             "unparsable": "$~Nicht analysierbare Vorlage: $template",
             "machineTranslated": "$~Dies wurde maschinell übersetzt, daher ist der Text möglicherweise nicht lesbar oder korrekt.",
-            "locallyRevised": "$~Dieser Text wurde lokal überarbeitet und weicht von der offiziellen Übersetzung ab."
+            "locallyRevised": "$~Du hast das bearbeitet. Deine Änderung bleibt auf diesem Gerät gespeichert, bis du sie im Lokalisierungsbereich einreichst."
         },
         "collaborate": {
             "label": "$~zusammenarbeiten",
@@ -2646,7 +2650,7 @@
             },
             "button": {
                 "edit": "$~Schlagen Sie eine Änderung an diesem Text vor",
-                "submit": "$~Vorschlag zur Bearbeitung einreichen",
+                "submit": "$~Diese Änderung auf diesem Gerät speichern",
                 "cancel": "$~Vorgeschlagene Bearbeitung verwerfen",
                 "revert": "$~Zum offiziellen Text zurückkehren",
                 "editTip": "$~Schlagen Sie eine Änderung am Tooltip dieses Steuerelements vor.",
@@ -2732,6 +2736,14 @@
                 "conceptName": "$~Die Dokumentation erklärt dieses Wort schon. Ein Link dazu würde also dorthin führen.",
                 "alreadyUsed": "$~Das ist bereits eine Form von $term. Es wäre also unklar, welchen Begriff du gemeint hast.",
                 "searchOnly": "$~Ein Link endet an einem Leerzeichen oder einem Symbol. Diese Form hilft also nur bei der Suche."
+            },
+            "drafts": "$~Deine Änderungen sind auf diesem Gerät gespeichert. Wenn du bereit bist, reiche sie im Lokalisierungsbereich ein, damit alle sie sehen können.",
+            "save": {
+                "saved": "$~Auf diesem Gerät gespeichert",
+                "reverted": "$~Offizieller Text wiederhergestellt",
+                "failed": "$~Diese Änderung konnte nicht gespeichert werden. Versuche es noch einmal.",
+                "savedAnnouncement": "$~Auf diesem Gerät gespeichert: $text",
+                "revertedAnnouncement": "$~Offizieller Text wiederhergestellt: $text"
             }
         },
         "tour": {

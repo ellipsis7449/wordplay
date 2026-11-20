@@ -171,15 +171,15 @@
                     "off": "show $name"
                 },
                 "showSource": {
-                    "on": "hide source $name",
-                    "off": "show source $name"
+                    "on": "hide the editor for $name",
+                    "off": "show the editor for $name"
                 }
             },
             "label": {
                 "output": "stage",
                 "palette": "palette",
                 "docs": "guide",
-                "source": "source",
+                "source": "editor",
                 "collaborate": "collaborate"
             },
             "button": {
@@ -217,7 +217,7 @@
                 },
                 "revert": "revert to original code",
                 "focusOutput": "focus keyboard on the stage",
-                "focusSource": "focus on the next source",
+                "focusSource": "focus on the next editor",
                 "focusDocs": "focus on the documentation",
                 "focusPalette": "focus on the palette",
                 "focusCycle": "focus on the next tile",
@@ -335,7 +335,7 @@
                 "launch": "take a tour of the project controls",
                 "controls": "These /controls/ at the bottom apply to the *project as a whole*, no matter which tile you're working in.",
                 "name": "The /name/ field is your project's name. Names show up in the *project* and *gallery* views.",
-                "sourceToggle": "This /toggle/ shows or hides the *source file*. The *other toggles* on this row do the same for the other tiles.",
+                "sourceToggle": "This /toggle/ shows or hides the *editor* for a *source file*. The *other toggles* on this row do the same for the other tiles.",
                 "addSource": "Some projects benefit from *multiple* source files, where data is stored in one and imported into the *main* source. The /add source/ button offers the ways of making one: an empty file, a picture, a song, or some data.",
                 "share": "The /share/ dialog lets you share your project with *galleries*, with the *public*, or copy it as *text* to share elsewhere.",
                 "languages": "The /languages/ button shows which languages your project is written in, lets you add or remove one, and can *translate* your project's *names*, *text*, and *documentation* into a new language.",
@@ -746,8 +746,6 @@
             "finishedPartial": "Your project now speaks $language, but $#kept[$kept phrase|$kept phrases] kept the original words."
         },
         "source": {
-            "label": "source",
-            "title": "code",
             "add": {
                 "header": "add code",
                 "explanation": "A project can hold more than one file of code. Make an empty one to write in, or make one out of a picture or a song. You can use the values with @Borrow.",
@@ -1329,7 +1327,13 @@
                 "microphone": "microphone",
                 "camera": "camera",
                 "note": "Your browser will ask before sharing.",
-                "retry": "Retry"
+                "retry": "Retry",
+                "blocked": {
+                    "chromium": "Your browser blocked the $permission here, so I can't ask again. Click the icon left of the web address, turn on $permission, then choose $retry.",
+                    "safari": "Your browser blocked the $permission here, so I can't ask again. Open Website Settings (in the Safari menu on a Mac, or the page menu by the address on an iPhone or iPad), allow $permission, then choose $retry.",
+                    "firefox": "Your browser blocked the $permission here, so I can't ask again. Click the crossed-out $permission icon in the address bar, remove the block, then choose $retry.",
+                    "other": "Your browser blocked the $permission here, so I can't ask again. Allow $permission in your browser's settings for this site, then choose $retry."
+                }
             },
             "gate": {
                 "start": {
@@ -2803,6 +2807,14 @@
                 "searchOnly": "A link ends at a space or a symbol, so this form will only help searching."
             },
             "description": "Welcome to localization mode! You can suggest improvements to the text in the @wordplay interface. Choose any text to suggest an edit. Your suggestions will be reviewed, and if approved, will become part of the platform for everyone to see. Thanks for helping make Wordplay more accessible for everyone in the world!",
+            "drafts": "Your edits are saved on this device. When you're ready, submit them from the localization workspace so everyone can see them.",
+            "save": {
+                "saved": "Saved on this device",
+                "reverted": "Official text restored",
+                "failed": "This edit couldn't be saved. Try again.",
+                "savedAnnouncement": "Saved on this device: $text",
+                "revertedAnnouncement": "Official text restored: $text"
+            },
             "toggle": {
                 "mode": {
                     "on": "leave localization mode",
@@ -2812,7 +2824,7 @@
             "button": {
                 "edit": "Suggest an edit to this text",
                 "editTip": "Suggest an edit to this control's tooltip",
-                "submit": "Submit suggested edit",
+                "submit": "Save this edit on this device",
                 "cancel": "Discard suggested edit",
                 "revert": "Revert to official text",
                 "prev": "Edit the previous item",
@@ -2891,7 +2903,7 @@
             "unwritten": "TBD",
             "unparsable": "Unparsable template: $template",
             "machineTranslated": "This was machine translated, so it may not be readable or correct.",
-            "locallyRevised": "This text has been locally revised and differs from the official translation."
+            "locallyRevised": "You edited this. Your edit is saved on this device until you submit it from the localization workspace."
         },
         "phonemes": {
             "toggle": {

@@ -119,15 +119,15 @@
                     "off": "$~hiện $name"
                 },
                 "showSource": {
-                    "on": "$~ẩn nguồn $name",
-                    "off": "$~hiện nguồn $name"
+                    "on": "$~ẩn trình soạn thảo của $name",
+                    "off": "$~hiện trình soạn thảo của $name"
                 }
             },
             "label": {
                 "output": "$~sân khấu",
                 "palette": "$~bảng màu",
                 "docs": "$~hướng dẫn",
-                "source": "$~nguồn",
+                "source": "$~trình soạn thảo",
                 "collaborate": "$~cộng tác"
             },
             "button": {
@@ -158,7 +158,7 @@
                 "addSource": "$~thêm @Source khác: một cái trống, hoặc một cái tạo từ một bức ảnh hay một bài hát",
                 "revert": "$~khôi phục lại mã gốc",
                 "focusOutput": "$~tập trung bàn phím trên sân khấu",
-                "focusSource": "$~tập trung vào nguồn tiếp theo",
+                "focusSource": "$~chuyển sang trình soạn thảo tiếp theo",
                 "focusDocs": "$~tập trung vào tài liệu",
                 "focusPalette": "$~tập trung vào bảng màu",
                 "focusCycle": "$~tập trung vào ô tiếp theo",
@@ -272,7 +272,7 @@
                 "launch": "$~Hãy tham quan hệ thống điều khiển dự án.",
                 "controls": "$~Các nút điều khiển ở phía dưới này áp dụng cho *toàn bộ dự án*, bất kể bạn đang làm việc trên ô nào.",
                 "name": "$~Trường /tên/ là tên của dự án của bạn. Tên hiện ra trong các chế độ xem *dự án* và *phòng trưng bày*.",
-                "sourceToggle": "$~Nút /toggle/ này hiển thị hoặc ẩn *tệp nguồn*. *Các nút toggle khác* trên hàng này thực hiện chức năng tương tự đối với các ô khác.",
+                "sourceToggle": "$~/Nút bật tắt/ này hiện hoặc ẩn *trình soạn thảo* của một *tệp nguồn*. Các *nút bật tắt khác* trên hàng này làm điều tương tự cho các ô còn lại.",
                 "addSource": "$~Một số dự án cần *nhiều* nguồn, nơi dữ liệu được lưu trong một nguồn và được đưa vào nguồn *chính*. Nút /thêm nguồn/ đưa ra các cách để tạo một nguồn: một tệp trống, một bức ảnh, một bài hát, hoặc một dữ liệu.",
                 "share": "$~Hộp thoại /share/ cho phép bạn chia sẻ dự án của mình với *các thư viện ảnh*, với *công chúng*, hoặc sao chép nó dưới dạng *văn bản* để chia sẻ ở nơi khác.",
                 "checkpoints": "$~Mục /revisions/ cho phép bạn quay lại các phiên bản trước đó của dự án và chụp ảnh màn hình các phiên bản mà bạn muốn lưu lại.",
@@ -685,7 +685,6 @@
             }
         },
         "source": {
-            "label": "$~nguồn",
             "empty": [
                 "$~Bắt đầu nào! Bạn có thể…",
                 "• Mở 📕 và kéo 🖱️ chúng tôi vào chương trình này.",
@@ -867,7 +866,6 @@
                 "invalidName": "$~Đây phải là một tên chơi chữ hợp lệ.",
                 "invalidWords": "$~Từ ngữ không được trống rỗng hoặc chứa các ký hiệu dành riêng."
             },
-            "title": "$~mã số",
             "tour": {
                 "launch": "$~Hãy cùng khám phá trình chỉnh sửa.",
                 "editor": "$~Tất cả mã của bạn đều nằm trong trình soạn thảo. Mỗi chương trình @wordplay đều được đánh giá thành một giá trị, và giá trị đó sẽ hiển thị trên màn hình.",
@@ -1062,7 +1060,13 @@
                 "microphone": "$~micro",
                 "camera": "$~máy ảnh",
                 "note": "$~Trình duyệt của bạn sẽ hỏi trước khi chia sẻ.",
-                "retry": "$~Thử lại"
+                "retry": "$~Thử lại",
+                "blocked": {
+                    "chromium": "$~Trình duyệt của bạn đã chặn $permission ở đây, nên mình không thể hỏi lại. Hãy nhấp vào biểu tượng bên trái địa chỉ web, bật $permission, rồi chọn $retry.",
+                    "safari": "$~Trình duyệt của bạn đã chặn $permission ở đây, nên mình không thể hỏi lại. Hãy mở Cài đặt trang web (trong menu Safari trên máy Mac, hoặc menu trang cạnh địa chỉ trên iPhone hay iPad), cho phép $permission, rồi chọn $retry.",
+                    "firefox": "$~Trình duyệt của bạn đã chặn $permission ở đây, nên mình không thể hỏi lại. Hãy nhấp vào biểu tượng $permission bị gạch chéo trên thanh địa chỉ, gỡ bỏ việc chặn, rồi chọn $retry.",
+                    "other": "$~Trình duyệt của bạn đã chặn $permission ở đây, nên mình không thể hỏi lại. Hãy cho phép $permission trong phần cài đặt trình duyệt cho trang web này, rồi chọn $retry."
+                }
             },
             "multiselect": "$~Sử dụng phím Tab, Alt và các phím mũi tên để di chuyển giữa các đầu ra. Nhấn phím Space để thêm hoặc xóa đầu ra đang được chọn khỏi vùng chọn của bạn. Nhấn Enter để chỉ chọn đầu ra đó và mở bảng công cụ. Nhấn Escape để xóa vùng chọn của bạn. Nhấn Control hoặc Command và A để chọn tất cả các đầu ra.",
             "selected": "$~$name đã được chọn, $count đã được chọn",
@@ -1508,7 +1512,7 @@
             "tour": {
                 "launch": "$~tham quan hướng dẫn viên.",
                 "guide": "$~Tệp /guide/ chứa *tài liệu* hướng dẫn về tất cả các khái niệm và *khả năng* của *ngôn ngữ lập trình* @wordplay.",
-                "mode": "$~Sử dụng nút /toggle/ này để tự chuyển đổi giữa phần *mã nguồn* và phần *hướng dẫn*.",
+                "mode": "$~Sử dụng nút /Nút bật tắt/ này để tự chuyển đổi giữa phần *mã nguồn* và phần *hướng dẫn*.",
                 "search": "$~Hộp tìm kiếm rất hữu ích để *khám phá* các tính năng, hoặc tìm kiếm nhanh một tính năng *theo tên*.",
                 "code": "$~Đây là phần /mã số/. Nó chứa tài liệu về *ngôn ngữ lập trình* — những khối xây dựng mà bạn có thể kết hợp để tạo ra các chương trình.",
                 "howto": "$~Đây là phần hướng dẫn. Nó chứa các *mẫu hữu ích* để đạt được các hành vi cụ thể trong dự án của bạn."
@@ -2569,7 +2573,7 @@
             "unwritten": "$~Sẽ được xác định sau.",
             "unparsable": "$~Mẫu không thể phân tích cú pháp: $template",
             "machineTranslated": "$~Đây là bản dịch máy, vì vậy có thể không dễ đọc hoặc không chính xác.",
-            "locallyRevised": "$~Văn bản này đã được chỉnh sửa cục bộ và khác với bản dịch chính thức."
+            "locallyRevised": "$~Bạn đã sửa phần này. Bản sửa của bạn được lưu trên thiết bị này cho đến khi bạn gửi nó từ không gian làm việc bản địa hóa."
         },
         "emoji": {
             "noCharacters": "$~Tạo nhân vật tùy chỉnh",
@@ -2644,7 +2648,7 @@
             },
             "button": {
                 "edit": "$~Hãy đề xuất chỉnh sửa cho văn bản này.",
-                "submit": "$~Gửi đề xuất chỉnh sửa",
+                "submit": "$~Lưu bản sửa này trên thiết bị này",
                 "cancel": "$~Bỏ đề xuất chỉnh sửa",
                 "revert": "$~Trở lại văn bản chính thức",
                 "editTip": "$~Đề xuất chỉnh sửa chú thích công cụ của điều khiển này.",
@@ -2730,6 +2734,14 @@
                 "conceptName": "$~Tài liệu đã giải thích từ này rồi, nên một liên kết đến nó sẽ dẫn đến đó thay vì đây.",
                 "alreadyUsed": "$~Đây đã là một dạng viết của $term rồi, nên sẽ không rõ bạn muốn nói đến thuật ngữ nào.",
                 "searchOnly": "$~Một liên kết kết thúc ở dấu cách hoặc ký hiệu, nên dạng viết này chỉ giúp cho việc tìm kiếm."
+            },
+            "drafts": "$~Các bản sửa của bạn được lưu trên thiết bị này. Khi sẵn sàng, hãy gửi chúng từ không gian làm việc bản địa hóa để mọi người có thể xem.",
+            "save": {
+                "saved": "$~Đã lưu trên thiết bị này",
+                "reverted": "$~Đã khôi phục văn bản chính thức",
+                "failed": "$~Không thể lưu bản sửa này. Hãy thử lại.",
+                "savedAnnouncement": "$~Đã lưu trên thiết bị này: $text",
+                "revertedAnnouncement": "$~Đã khôi phục văn bản chính thức: $text"
             }
         },
         "tour": {

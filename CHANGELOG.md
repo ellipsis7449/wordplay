@@ -4,15 +4,36 @@ We'll note all notable changes in this file, including bug fixes, enhancements, 
 Dates are in `YYYY-MM-DD` format and versions are in [semantic versioning](http://semver.org/) format.
 These notes are publicly posted in [production](https://wordplay.dev/updates), so we write them to an audience of teachers and youth.
 
-## 0.42.0 - 2026-11-12
+## 0.42.1 - 2026-11-20
 
 ### Fixed
 
+- 🤝 The buttons under each character in a gallery no longer overlap the next character's, and a gallery's name is no longer cut off.
+
+## 0.42.0 - 2026-11-12
+
+### Changed
+
+- 🧭 The window where you write code is now called the editor everywhere, including the title of the editor tour, which used to say "source." (#1498)
+- 🔑 If your browser has blocked the microphone or camera, the stage now tells you how to allow it, and the project starts as soon as you do. (#1476)
+
+### Fixed
+
+- 🌐 Localization edits now say when they're saved, stay on screen after a reload, and the Learn page shows the tutorial in Roman Urdu and Taiwanese Hokkien. (#1495)
+- ✍️ Editing a tutorial's text in localization mode now fits inside its speech bubble, so long text wraps instead of being cut off.
 - 🤝 Projects shared to a gallery no longer vanish from it when a computer with an old copy of the gallery saves it.
 - 💾 The [Projects](https://wordplay.dev/projects) page no longer shows other people's projects that were saved on the same computer.
 - 🐛 A project you have open no longer closes with an error when its gallery changes.
 - 🌐 Translating a project no longer fails when it has a type and a value with the same name, like `Page` and `page`.
 - ✍️ Putting a custom character inside quotes no longer changes the quotes, so the character shows on stage right away.
+- 💾 Changes you make to a project while offline are no longer replaced by an older copy when you open it on another computer or in another tab.
+- 🔑 Signing in to a different account on a shared computer no longer loses the last person's changes that had not been saved online yet.
+- 🌐 Translating a project no longer undoes what you typed while it was translating.
+- ✍️ Typing that would make a project too big now tells you, when before the typing just disappeared.
+- 🤝 Renaming a class or gallery no longer removes someone who was added to it at the same moment.
+- 💾 Folders and other settings you change on one computer are no longer erased by another computer you left open.
+- 🐛 Chat messages that others sent while you were offline are no longer erased when you reconnect.
+- 🎨 Saving one custom character no longer undoes newer changes to another one.
 
 ## 0.41.0 - 2026-11-07
 

@@ -646,10 +646,6 @@ type UITexts = {
     };
     /** Source file controls */
     source: {
-        /** [plain] The ARIA label for the source file section */
-        label: string;
-        /** [plain] The label for the code editor toolbar */
-        title: string;
         /** The dialog that makes a new source file — from nothing, or from
          *  something a creator already has. One dialog, so there is exactly one
          *  place in the app that turns data into code. */
@@ -1516,6 +1512,19 @@ type UITexts = {
             note: string;
             /** [plain] Label of the button that retries permission after a denial */
             retry: string;
+            /** Shown in place of the denial's explanation when the browser has
+             *  blocked the permission and will no longer ask. One per browser
+             *  family, since each keeps the setting somewhere different. */
+            blocked: {
+                /** [formatted] How to allow a blocked permission in Chrome, Edge, and other Chromium browsers */
+                chromium: Template<['permission', 'retry']>;
+                /** [formatted] How to allow a blocked permission in Safari on a Mac, iPhone, or iPad */
+                safari: Template<['permission', 'retry']>;
+                /** [formatted] How to allow a blocked permission in Firefox */
+                firefox: Template<['permission', 'retry']>;
+                /** [formatted] How to allow a blocked permission in any other browser */
+                other: Template<['permission', 'retry']>;
+            };
         };
         /** The unified start gate (permissions, moderation, and photosensitivity warnings). */
         gate: {
@@ -2870,6 +2879,21 @@ type UITexts = {
         };
         /** [formatted] An explanation of the localization editor */
         description: FormattedText;
+        /** [formatted] Says that edits are kept on this device until they are submitted from the localization workspace */
+        drafts: FormattedText;
+        /** Feedback after a localization edit is saved, removed, or fails to save */
+        save: {
+            /** [plain] Shown beside a field after its edit is saved on this device */
+            saved: string;
+            /** [plain] Shown beside a field after its edit is removed and the official text is back */
+            reverted: string;
+            /** [plain] Shown beside a field when its edit could not be saved */
+            failed: string;
+            /** [plain] Announced after an edit is saved, naming the saved text */
+            savedAnnouncement: Template<['text']>;
+            /** [plain] Announced after an edit is removed, naming the text that is back */
+            revertedAnnouncement: Template<['text']>;
+        };
         toggle: {
             /** The on/off switch for the localization editor */
             mode: ToggleText;

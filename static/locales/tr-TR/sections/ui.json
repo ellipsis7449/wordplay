@@ -85,7 +85,7 @@
             "color": {
                 "field": "$~renk alanı",
                 "instructions": "$~Renk tonunu değiştirmek için sol ve sağ ok tuşlarını, renk canlılığını değiştirmek için yukarı ve aşağı ok tuşlarını, açıklığı değiştirmek için ise sayfa yukarı ve sayfa aşağı tuşlarını kullan. Daha küçük adımlar için shift tuşunu basılı tut. Ekran okuyucuyla, önce bu kontrolü kullan ya da altındaki açıklık, renk canlılığı ve renk tonu kaydırıcılarını kullan.",
-                "value": "$~$color , LCH $l , $c , $h",
+                "value": "$~$color, LCH $l, $c, $h",
                 "input": {
                     "description": "$~Herhangi bir web formatında bir renk girin",
                     "placeholder": "$~#f00, rgb(), hsl(), kırmızı",
@@ -119,15 +119,15 @@
                     "off": "$~göster $name"
                 },
                 "showSource": {
-                    "on": "$~kaynağı gizle $name",
-                    "off": "$~kaynağı göster $name"
+                    "on": "$~$name için düzenleyiciyi gizle",
+                    "off": "$~$name için düzenleyiciyi göster"
                 }
             },
             "label": {
                 "output": "$~sahne",
                 "palette": "$~palet",
                 "docs": "$~rehber",
-                "source": "$~kaynak",
+                "source": "$~düzenleyici",
                 "collaborate": "$~işbirliği yapmak"
             },
             "button": {
@@ -155,7 +155,7 @@
                 "addSource": "$~başka bir @Source ekle: boş bir tane, ya da bir resimden veya bir şarkıdan yapılmış bir tane",
                 "revert": "$~orijinal koda geri dön",
                 "focusOutput": "$~sahnede klavyeye odaklan",
-                "focusSource": "$~bir sonraki kaynağa odaklan",
+                "focusSource": "$~sonraki düzenleyiciye odaklan",
                 "focusDocs": "$~belgelere odaklanın",
                 "focusPalette": "$~palete odaklan",
                 "focusCycle": "$~bir sonraki karoya odaklan",
@@ -272,7 +272,7 @@
                 "launch": "$~Proje kontrollerini inceleyin.",
                 "controls": "$~Alttaki bu kontroller, hangi kutucukta çalışıyor olursanız olun, *projenin tamamı* için geçerlidir.",
                 "name": "$~/isim/ alanı projenizin ismidir. İsimler *proje* ve *galeri* görünümlerinde görünür.",
-                "sourceToggle": "$~Bu /toggle/ düğmesi *kaynak dosyayı* gösterir veya gizler. Bu satırdaki *diğer /toggle/ düğmeleri* diğer kutucuklar için de aynı işlevi görür.",
+                "sourceToggle": "$~Bu /anahtar/, bir *kaynak dosyasının* *düzenleyicisini* gösterir veya gizler. Bu satırdaki *diğer anahtarlar* da diğer kutucuklar için aynısını yapar.",
                 "addSource": "$~Bazı projeler *birden fazla* kaynak dosyasından yararlanır. Bu dosyalardan birinde veriler saklanır ve *ana* kaynağa aktarılır. /kaynak ekle/ düğmesi, bunu yapmanın yollarını sunar: boş bir dosya, bir resim, bir şarkı ya da bazı veriler.",
                 "share": "$~/paylaş/ iletişim kutusu, projenizi *galerilerle*, *herkesle* paylaşmanıza veya başka bir yerde paylaşmak üzere *metin* olarak kopyalamanıza olanak tanır.",
                 "checkpoints": "$~/revisions/ paneli, projenizin önceki sürümlerine *geri dönmenizi* ve hatırlamak istediğiniz sürümlerin *anlık görüntüsünü* almanızı sağlar.",
@@ -432,7 +432,6 @@
             }
         },
         "source": {
-            "label": "$~kaynak",
             "empty": [
                 "$~Hadi başlayalım! Şunları yapabilirsiniz…",
                 "• 📕 uygulamasını açın ve bizi bu programa sürükleyin 🖱️.",
@@ -614,7 +613,6 @@
                 "invalidName": "$~Bu geçerli bir Wordplay adı olmalıdır.",
                 "invalidWords": "$~Kelimeler boş olamaz veya ayrılmış semboller içeremez."
             },
-            "title": "$~kod",
             "tour": {
                 "launch": "$~Editörün ofisini gezin.",
                 "editor": "$~Tüm kodunuz *editöre* yazılır. Her @wordplay programı *bir değere dönüşür* ve bu değer *sahneye* yansıtılır.",
@@ -741,7 +739,7 @@
             "label": "$~çatışmalar ve yardım",
             "cursor": "$~Bu bir *$node*$type[ ve o bir $type|].",
             "cursorDoc": "$~Şöyle diyorlar: “$description”",
-            "cursorParent": "$~Bunlar bir *$node*$type[içindedir, bu da bir $type olarak değerlendirilir.| içindedir.]",
+            "cursorParent": "$~Onlar bir *$node*$type[, ve bu bir $type değerine dönüşür|] içinde.",
             "learn": "$~/Daha fazla bilgi edin/",
             "evaluating": "$~Aman ne güzel, değerlendirelim!",
             "space": "$~Burası uzay! Hiçbir şeyin bu kadar çok şey söyleyebileceğini kim bilebilirdi?",
@@ -809,7 +807,13 @@
                 "microphone": "$~mikrofon",
                 "camera": "$~kamera",
                 "note": "$~Paylaşmadan önce tarayıcınız size soracaktır.",
-                "retry": "$~Tekrar dene"
+                "retry": "$~Tekrar dene",
+                "blocked": {
+                    "chromium": "$~Tarayıcın burada $permission iznini engelledi, bu yüzden tekrar soramıyorum. Web adresinin solundaki simgeye tıkla, $permission iznini aç, sonra $retry seçeneğini seç.",
+                    "safari": "$~Tarayıcın burada $permission iznini engelledi, bu yüzden tekrar soramıyorum. Web Sitesi Ayarları'nı aç (Mac'te Safari menüsünde, iPhone veya iPad'de adresin yanındaki sayfa menüsünde), $permission iznine izin ver, sonra $retry seçeneğini seç.",
+                    "firefox": "$~Tarayıcın burada $permission iznini engelledi, bu yüzden tekrar soramıyorum. Adres çubuğundaki üstü çizili $permission simgesine tıkla, engeli kaldır, sonra $retry seçeneğini seç.",
+                    "other": "$~Tarayıcın burada $permission iznini engelledi, bu yüzden tekrar soramıyorum. Tarayıcının ayarlarında bu site için $permission iznine izin ver, sonra $retry seçeneğini seç."
+                }
             },
             "multiselect": "$~Çıktılar arasında geçiş yapmak için Tab, Alt ve ok tuşlarını kullanın. Odaklanmış çıktıyı seçime eklemek veya seçimden kaldırmak için Boşluk tuşuna basın. Yalnızca o çıktıyı seçmek ve paleti açmak için Enter tuşuna basın. Seçimi temizlemek için Escape tuşuna basın. Tüm çıktıları seçmek için Control veya Command ve A tuşlarına basın.",
             "selected": "$~$name seçildi, $count seçildi",
@@ -1250,7 +1254,7 @@
             "tour": {
                 "launch": "$~Rehbere bir göz atın.",
                 "guide": "$~/guide/ klasörü, @wordplay'in tüm *programlama dili* kavramları ve *özellikleri* için *belgeler* içermektedir.",
-                "mode": "$~Bu /toggle/ özelliğini kullanarak *kod* ve *nasıl yapılır* bölümleri arasında kendiniz geçiş yapabilirsiniz.",
+                "mode": "$~Bu /anahtar/ özelliğini kullanarak *kod* ve *nasıl yapılır* bölümleri arasında kendiniz geçiş yapabilirsiniz.",
                 "search": "$~/Arama/ kutusu, özellikleri *keşfetmek* veya bir özelliği *ismiyle* hızlıca bulmak için faydalıdır.",
                 "code": "$~Bu, /kod/ bölümüdür. Programlama dili belgelerini içerir; yani programlar oluşturmak için birleştirebileceğiniz yapı taşlarını.",
                 "howto": "$~Bu, \"nasıl yapılır\" bölümüdür. Projelerinizde belirli davranışları elde etmek için *yararlı kalıplar* içerir."
@@ -2156,7 +2160,7 @@
             },
             "music": {
                 "staff": "$~bu parçanın notaları",
-                "track": "$~parça $count içinden $total",
+                "track": "$~parça $total içinden $count",
                 "duration": {
                     "label": "$~yeni bir nota ne kadar sürer",
                     "labels": ["$~𝅝", "$~𝅗𝅥", "$~𝅘𝅥", "$~𝅘𝅥𝅮", "$~𝅘𝅥𝅯"],
@@ -2314,7 +2318,7 @@
             "unwritten": "$~Belirsiz",
             "unparsable": "$~Ayrıştırılamayan şablon: $template",
             "machineTranslated": "$~Bu metin makine çevirisiyle oluşturulmuştur, bu nedenle okunabilir veya doğru olmayabilir.",
-            "locallyRevised": "$~Bu metin yerel olarak gözden geçirilmiştir ve resmi çeviriden farklıdır."
+            "locallyRevised": "$~Bunu sen düzenledin. Düzenlemen, yerelleştirme çalışma alanından gönderene kadar bu cihazda kayıtlı kalır."
         },
         "howto": {
             "galleryView": {
@@ -2639,7 +2643,7 @@
             },
             "button": {
                 "edit": "$~Bu metne bir düzenleme önerin.",
-                "submit": "$~Önerilen düzenlemeyi gönder",
+                "submit": "$~Bu düzenlemeyi bu cihaza kaydet",
                 "cancel": "$~Önerilen düzenlemeyi iptal et",
                 "revert": "$~Resmi metne geri dön",
                 "editTip": "$~Bu denetimin ipucu metnine bir düzenleme önerin.",
@@ -2725,6 +2729,14 @@
                 "conceptName": "$~Dokümantasyon bu kelimeyi zaten tanımlıyor, bu yüzden ona verilecek bir bağlantı oraya gider.",
                 "alreadyUsed": "$~Bu, $term'in zaten bir biçimi, bu yüzden hangi terimi kastettiğin belirsiz olur.",
                 "searchOnly": "$~Bir bağlantı bir boşlukta veya sembolde sona erer, bu yüzden bu biçim sadece arama yaparken işe yarar."
+            },
+            "drafts": "$~Düzenlemelerin bu cihaza kaydedildi. Hazır olduğunda, herkes görebilsin diye onları yerelleştirme çalışma alanından gönder.",
+            "save": {
+                "saved": "$~Bu cihaza kaydedildi",
+                "reverted": "$~Resmi metin geri yüklendi",
+                "failed": "$~Bu düzenleme kaydedilemedi. Tekrar dene.",
+                "savedAnnouncement": "$~Bu cihaza kaydedildi: $text",
+                "revertedAnnouncement": "$~Resmi metin geri yüklendi: $text"
             }
         },
         "tour": {
@@ -2787,7 +2799,7 @@
             "stepAtStart": "$~başlangıçta",
             "searchOpened": "$~kodda bul",
             "searchClosed": "$~bulma kapatıldı",
-            "searchMatch": "$~$index içinden eşleşme $count",
+            "searchMatch": "$~$count içinden eşleşme $index",
             "searchNoMatches": "$~eşleşme yok",
             "menuOpened": "$~menü, $#count[$count öneri|$count öneri]",
             "menuEmpty": "$~öneri yok",

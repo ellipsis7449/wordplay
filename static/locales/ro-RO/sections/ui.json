@@ -119,15 +119,15 @@
                     "off": "$~arată $name"
                 },
                 "showSource": {
-                    "on": "$~ascunde sursa $name",
-                    "off": "$~arată sursa $name"
+                    "on": "$~ascunde editorul pentru $name",
+                    "off": "$~arată editorul pentru $name"
                 }
             },
             "label": {
                 "output": "$~etapă",
                 "palette": "$~paletă",
                 "docs": "$~ghid",
-                "source": "$~sursă",
+                "source": "$~editor",
                 "collaborate": "$~colabora"
             },
             "button": {
@@ -159,7 +159,7 @@
                 "addSource": "$~adaugă un alt @Source: unul gol, sau unul făcut dintr-o poză sau un cântec",
                 "revert": "$~reveniți la codul original",
                 "focusOutput": "$~tastatură concentrată pe scenă",
-                "focusSource": "$~concentrați-vă pe următoarea sursă",
+                "focusSource": "$~mută atenția pe următorul editor",
                 "focusDocs": "$~concentrați-vă pe documentație",
                 "focusPalette": "$~concentrați-vă pe paletă",
                 "focusCycle": "$~concentrați-vă pe următoarea placă",
@@ -272,7 +272,7 @@
                 "launch": "$~faceți un tur al controalelor proiectului",
                 "controls": "$~Aceste /comenzi/ din partea de jos se aplică întregului *proiect*, indiferent de dala în care lucrați.",
                 "name": "$~Câmpul /nume/ este numele proiectului tău. Numele apar în vizualizările *project* și *gallery*.",
-                "sourceToggle": "$~Această /comutare/ afișează sau ascunde *fișierul sursă*. *Celelalte comenzi* de pe acest rând fac același lucru și pentru celelalte plăci.",
+                "sourceToggle": "$~Acest /comutator/ arată sau ascunde *editorul* pentru un *fișier sursă*. *Celelalte comutatoare* de pe acest rând fac același lucru pentru celelalte panouri.",
                 "addSource": "$~Unele proiecte au nevoie de *mai multe* fișiere sursă, unde datele sunt păstrate într-unul și importate în sursa *principală*. Butonul /adaugă sursă/ oferă moduri de a face unul: un fișier gol, o poză, un cântec sau niște date.",
                 "share": "$~Caseta de dialog /share/ vă permite să partajați proiectul cu *galerii*, cu *publicul* sau să îl copiați ca *text* pentru a-l partaja în altă parte.",
                 "checkpoints": "$~Panoul /revisions/ vă permite să *reveniți* la versiunile anterioare ale proiectului și la versiunile *snapshot* pe care doriți să le rețineți.",
@@ -685,8 +685,6 @@
             }
         },
         "source": {
-            "label": "$~sursă",
-            "title": "$~cod",
             "empty": [
                 "$~Să începem! Poți…",
                 "• Deschideți 📕 și trageți-ne 🖱️ în acest program.",
@@ -1062,7 +1060,13 @@
                 "microphone": "$~microfon",
                 "camera": "$~cameră",
                 "note": "$~Browserul tău te va întreba înainte de partajare.",
-                "retry": "$~Reîncercați"
+                "retry": "$~Reîncercați",
+                "blocked": {
+                    "chromium": "$~Browserul tău a blocat $permission aici, așa că nu pot cere din nou. Apasă pe pictograma din stânga adresei web, activează $permission, apoi alege $retry.",
+                    "safari": "$~Browserul tău a blocat $permission aici, așa că nu pot cere din nou. Deschide Setările site-ului (în meniul Safari pe un Mac sau în meniul paginii, lângă adresă, pe un iPhone sau iPad), permite $permission, apoi alege $retry.",
+                    "firefox": "$~Browserul tău a blocat $permission aici, așa că nu pot cere din nou. Apasă pe pictograma tăiată $permission din bara de adrese, elimină blocarea, apoi alege $retry.",
+                    "other": "$~Browserul tău a blocat $permission aici, așa că nu pot cere din nou. Permite $permission în setările browserului pentru acest site, apoi alege $retry."
+                }
             },
             "multiselect": "$~Folosește Tab și tastele Alt și săgeată pentru a te deplasa între ieșiri. Apăsă Space pentru a adăuga sau elimina ieșirea focalizată din selecție. Apăsă Enter pentru a selecta doar acea ieșire și a deschide paleta. Apăsă Escape pentru a șterge selecția. Apăsă Control sau Command și A pentru a selecta toate ieșirile.",
             "selected": "$~$name selectat, $count selectat",
@@ -2559,7 +2563,7 @@
             "button": {
                 "edit": "$~Sugerează o modificare a acestui text",
                 "editTip": "$~Sugerați o modificare a tooltip-ului acestui control",
-                "submit": "$~Trimiteți editarea sugerată",
+                "submit": "$~Salvează această modificare pe acest dispozitiv",
                 "cancel": "$~Renunță la editarea sugerată",
                 "revert": "$~Reveniți la textul oficial",
                 "prev": "$~Editați elementul anterior",
@@ -2643,6 +2647,14 @@
                 "conceptName": "$~Documentarea definește deja acest cuvânt, așa că o legătură la el ar duce acolo în schimb.",
                 "alreadyUsed": "$~Aceasta este deja o formă a $term, așa că nu ar fi clar la ce termen te referi.",
                 "searchOnly": "$~O legătură se termină la un spațiu sau un simbol, așa că această formă va ajuta doar la căutare."
+            },
+            "drafts": "$~Modificările tale sunt salvate pe acest dispozitiv. Când ești gata, trimite-le din spațiul de lucru pentru localizare, ca să le poată vedea toată lumea.",
+            "save": {
+                "saved": "$~Salvat pe acest dispozitiv",
+                "reverted": "$~Textul oficial a fost restaurat",
+                "failed": "$~Această modificare nu a putut fi salvată. Încearcă din nou.",
+                "savedAnnouncement": "$~Salvat pe acest dispozitiv: $text",
+                "revertedAnnouncement": "$~Textul oficial a fost restaurat: $text"
             }
         },
         "edit": {
@@ -2679,7 +2691,7 @@
             "unwritten": "$~De stabilit",
             "unparsable": "$~Șablon neanalizabil: $template",
             "machineTranslated": "$~Aceasta a fost tradusă automat, deci este posibil să nu fie lizibilă sau corectă.",
-            "locallyRevised": "$~Acest text a fost revizuit local și diferă de traducerea oficială."
+            "locallyRevised": "$~Ai modificat acest text. Modificarea ta este salvată pe acest dispozitiv până o trimiți din spațiul de lucru pentru localizare."
         },
         "emoji": {
             "noCharacters": "$~Creați un personaj personalizat",
